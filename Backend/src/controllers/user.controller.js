@@ -1,5 +1,11 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+// const generatingJwtToken = ()=>{
+
+// }
 
 const userRegistration = async (req, res) => {
   const { name, email, password } = req.body;
@@ -119,7 +125,25 @@ const login = async (req, res) => {
     });
   }
 
-  return res.status(200).json({ message: "User login successfully!" });
+  const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    },
+  );
+
+  return res.status(200).json({
+    message: "User login successfully!",
+    token,
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+  });
 };
 
 module.exports = {
