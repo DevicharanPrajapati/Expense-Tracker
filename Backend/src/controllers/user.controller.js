@@ -16,7 +16,7 @@ const userRegistration = async(req, res)=>{
     })
   }
 
-  const user = await User.create({
+  const RegisterUser = await User.create({
     name,
     email,
     password
@@ -24,7 +24,7 @@ const userRegistration = async(req, res)=>{
 
   return res
   .status(200)
-  .json({message : "User Registered Successfully!", user}
+  .json({message : "User Registered Successfully!", user : RegisterUser}
     
   )
   
@@ -39,7 +39,7 @@ const getAllRegisteredUser = async(req, res)=>{
   console.log(allUsers);
   return res
   .status(200)
-  .json({message : "Users Fetched Successfully", allUsers})
+  .json({message : "Users Fetched Successfully", user : allUsers})
 }
 
 const getOneUser = async(req, res)=>{
@@ -50,8 +50,54 @@ if (!oneUser) {
 
 return res
 .status(200)
-.json({message: "one user find successfully", oneUser})
+.json({message: "one user find successfully", user : oneUser})
 }
 
+const updateUser = async(req, res)=>{
+  const {id} = req.params;
+console.log(req.params);
+  if (!id) {
+    return res.status(400).json({message : "User id Not Found"});
+  }
 
-module.exports = {userRegistration, getAllRegisteredUser, getOneUser};
+  const {name} = req.body;
+
+   if (!name) {
+    return res.status(401).json({message : "Name is required"});
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    id,   // Which user?
+    {
+    name : name  // What to update?  
+    },
+    {
+      new : true  // Return updated document
+    }
+)
+
+  if (!updateUser) {
+    return res.status(404).json({message : "user not found"})
+  }
+
+  return res
+  .status(200)
+  .json({message : "user updated successfully" ,user : updateUser})
+
+}
+
+const deleteUser = async(req, res)=>{
+  const {id}  = req.params;
+  // console.log(req.params)
+  if(!id){
+    return res.status(404).json({message : "User id not found"})
+  }
+
+  const deletedUser = await User.findByIdAndDelete(id);
+
+  return res
+  .status(200)
+  .json({message : "User Deleted successfully!", user : deletedUser})
+}
+
+module.exports = {userRegistration, getAllRegisteredUser, getOneUser, updateUser, deleteUser};
