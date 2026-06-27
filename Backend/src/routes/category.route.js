@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.post("/addCategory", verifyToken, createCategory);
 router.get("/getCategory", verifyToken, getCategories);
-router.put("/updateCategory", verifyToken, updateCategory);
-router.delete("/deleteCategory", verifyToken, deleteCategory);
+router.put("/updateCategory/:id", verifyToken, updateCategory);
+router.delete("/deleteCategory/:id", verifyToken, deleteCategory);
 
 
 
