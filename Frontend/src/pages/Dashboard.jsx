@@ -2,8 +2,10 @@
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
-  )
-}
+    <div className="bg-amber-800 h-full w-full">
+      <h1>DashBoard</h1>
+    </div>
+  );
+};
 
-export default Dashboard
+export default Dashboard;
