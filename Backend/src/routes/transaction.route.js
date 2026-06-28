@@ -8,6 +8,6 @@ const {
 const router = express.Router();
 
 router.post("/addTransaction", verifyToken, createTransaction);
-router.post("/showTransaction", verifyToken, showAllTransaction);
+router.get("/showTransaction", verifyToken, showAllTransaction);
 
 module.exports = router;

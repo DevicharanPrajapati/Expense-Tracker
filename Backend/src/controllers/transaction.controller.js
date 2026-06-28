@@ -58,12 +58,12 @@ const showAllTransaction = async (req, res) => {
         .status(400)
         .json({ success: false, message: "User Not found" });
     }
-    const transactions = Transaction.findById({ user });
+    const transactions = await Transaction.find({user});
 
-    if (!transactions) {
+    if (transactions.length === 0) {
       return res
         .status(401)
-        .json({ success: false, message: "Transaction are not found" });
+        .json({ success: false, message: "Transactions are not found" });
     }
 
     return res.status(200).json({
