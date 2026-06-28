@@ -4,12 +4,18 @@ const connectDB = require("./config/db")
 const userRoutes = require("./routes/user.route")
 const categoryRoutes = require('./routes/category.route')
 const transactionRoutes = require("./routes/transaction.route")
+const cors = require("cors");
 
 
 dotenv.config();
 connectDB();
 
 const app = express();
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
+
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
