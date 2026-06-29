@@ -11,7 +11,7 @@ const verifyToken = require("../middleware/auth.middleware");
 const router = express.Router();
 
 router.post("/addCategory", verifyToken, createCategory);
-router.get("/getCategory", verifyToken, getCategories);
+router.get("/getCategory",verifyToken, getCategories);
 router.put("/updateCategory/:id", verifyToken, updateCategory);
 router.delete("/deleteCategory/:id", verifyToken, deleteCategory);
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import api from "../services/api"
 
 const CategoryForm = () => {
   const [formData, setFormData] = useState({
@@ -13,13 +14,27 @@ const CategoryForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     console.log(formData);
 
     // TODO: Call your API here
     // await api.post("/category/createCategory", formData);
+    try {
+    const response = await api.post("/category/createCategory", formData);
+
+    console.log(response.data);
+
+    alert("Category Added");
+
+    setFormData({
+      name: "",
+      type: "expense",
+    });
+  } catch (error) {
+    console.log(error.response?.data);
+  }
 
     setFormData({
       name: "",

@@ -1,15 +1,19 @@
 import BalanceCard from "../components/BalanceCard";
 import TransactionList from "../components/TransactionList";
 import AddTransaction from "../components/AddTransaction";
+import Categories from "./Categories";
+// import { useAuth } from "../context/AuthContexts";
+// import { useEffect } from "react";
+// import api from "../services/api"
 
 const Dashboard = () => {
+  
+
   return (
     <div className="min-h-screen bg-gray-100 p-6 rounded-2xl">
       {/* Header */}
       <h2 className="text-3xl font-bold text-gray-800">Dashboard</h2>
-      <p className="text-gray-500 mb-8">
-        Let's manage your pocket.
-      </p>
+      <p className="text-gray-500 mb-8">Let's manage your pocket.</p>
 
       {/* Balance Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -29,6 +33,7 @@ const Dashboard = () => {
         {/* Right */}
         <div className="lg:col-span-2">
           <TransactionList />
+          <Categories />
         </div>
       </div>
     </div>

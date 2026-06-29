@@ -48,7 +48,7 @@ try {
     .json({
       success: true,
       message : "Categories Fetched successful",
-      Category : categories
+      categories,
     })
 } catch (error) {
   return res.status(500)
