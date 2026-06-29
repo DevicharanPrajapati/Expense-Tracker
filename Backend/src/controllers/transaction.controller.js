@@ -88,8 +88,6 @@ const getDashboard = async (req, res) => {
       },
     ]);
 
-    console.log("Income Result:", incomeResult);
-    console.log("Expense Result:", expenseResult);
     const totalIncome = incomeResult.length > 0 ? incomeResult[0].total : 0;
 
     const totalExpense = expenseResult.length > 0 ? expenseResult[0].total : 0;

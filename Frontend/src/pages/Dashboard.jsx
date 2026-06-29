@@ -1,13 +1,11 @@
 import BalanceCard from "../components/BalanceCard";
 import TransactionList from "../components/TransactionList";
 import AddTransaction from "../components/AddTransaction";
-// import Categories from "./Categories";
-// import { useAuth } from "../context/AuthContexts";
-// import { useEffect } from "react";
-// import api from "../services/api"
+import IncomeCard from "../components/IncomeCard";
+import ExpenseCard from "../components/ExpenseCard";
+import SevingCard from "../components/SavingCard";
 
 const Dashboard = () => {
- 
   return (
     <div className="min-h-screen bg-gray-100 p-6 rounded-2xl">
       {/* Header */}
@@ -17,9 +15,9 @@ const Dashboard = () => {
       {/* Balance Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <BalanceCard />
-        <BalanceCard />
-        <BalanceCard />
-        <BalanceCard />
+        <IncomeCard />
+        <ExpenseCard />
+        <SevingCard />
       </div>
 
       {/* Bottom Section */}
