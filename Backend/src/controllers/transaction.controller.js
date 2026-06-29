@@ -15,10 +15,14 @@ const createTransaction = async (req, res) => {
     }
     console.log(category);
 
+    console.log("User ID:", req.user.id);
+    console.log("Category ID:", category);
+
     const categoryExists = await Category.findOne({
       _id: category,
       userId: req.user.id,
     });
+    console.log("Category Found:", categoryExists);
 
     if (!categoryExists) {
       return res.status(404).json({
@@ -58,8 +62,10 @@ const showAllTransaction = async (req, res) => {
         .status(400)
         .json({ success: false, message: "User Not found" });
     }
-    const transactions = await Transaction.find({ user })
-    .populate("category", "name");
+    const transactions = await Transaction.find({ user }).populate(
+      "category",
+      "name",
+    );
 
     if (transactions.length === 0) {
       return res
@@ -83,78 +89,80 @@ const showAllTransaction = async (req, res) => {
 const incomeTransactions = async (req, res) => {
   try {
     const user = req.user.id;
-  
+
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found!" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found!" });
     }
-  
+
     const incomeData = await Transaction.find({
       user: user,
       type: "income",
     }).populate("category", "name");
-  
-    if(incomeData.length === 0){
-      return res.status(500).json({success : false, message : "income Not found"});
+
+    if (incomeData.length === 0) {
+      return res
+        .status(500)
+        .json({ success: false, message: "income Not found" });
     }
-  
+
     const totalIncome = incomeData.reduce(
       (total, transaction) => total + transaction.amount,
       0,
     );
-  
-    return res
-    .status(200)
-    .json({success : true, 
-      message : "income fetched successfully", 
+
+    return res.status(200).json({
+      success: true,
+      message: "income fetched successfully",
       totalIncome,
-      incomeTransactions : incomeData
+      incomeTransactions: incomeData,
     });
-    
   } catch (error) {
-    return res.status(500).json({success : false, message : error.message});
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
 const expenseTransactions = async (req, res) => {
   try {
     const user = req.user.id;
-  
+
     if (!user) {
-      return res.status(404).json({ success: false, message: "User not found!" });
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found!" });
     }
-  
+
     const expenseData = await Transaction.find({
       user: user,
       type: "expense",
     }).populate("category", "name");
-  
-    if(expenseData.length === 0){
-      return res.status(500).json({success : false, message : "expense data Not found"});
+
+    if (expenseData.length === 0) {
+      return res
+        .status(500)
+        .json({ success: false, message: "expense data Not found" });
     }
-  
+
     const totalExpense = expenseData.reduce(
       (total, transaction) => total + transaction.amount,
       0,
     );
-  
-    return res
-    .status(200)
-    .json({success : true, 
-      message : "expense fetched successfully", 
+
+    return res.status(200).json({
+      success: true,
+      message: "expense fetched successfully",
       totalExpense,
-      expenseTransactions : expenseData
+      expenseTransactions: expenseData,
     });
-    
   } catch (error) {
-    return res.status(500).json({success : false, message : error.message});
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
-
-
 
 module.exports = {
   createTransaction,
   showAllTransaction,
   incomeTransactions,
-  expenseTransactions
+  expenseTransactions,
 };

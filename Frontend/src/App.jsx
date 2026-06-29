@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import MainLayout from "./layouts/MainLayout";
 import TransactionFrom from "./components/TransactionForm";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import {CategoryProvider} from "./context/CategoryContext";
 
 function App() {
   return (
@@ -23,7 +24,9 @@ function App() {
           path="/transition"
           element={
             <ProtectedRoute>
+              <CategoryProvider>
               <TransactionFrom />
+              </CategoryProvider>
             </ProtectedRoute>
           }
         />

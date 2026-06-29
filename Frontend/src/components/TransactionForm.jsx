@@ -3,11 +3,19 @@ import api from "../services/api.js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContexts.jsx";
+import { useCategory } from "../context/CategoryContext.jsx";
+// Add at the top
+import { FaPlus } from "react-icons/fa6";
+import AddCategoryModal from "../components/CategoryForm.jsx";
+
 
 const TransactionFrom = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
-  console.log(token);
+  // console.log(token);
+  const { categories } = useCategory();
+
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -16,9 +24,10 @@ const TransactionFrom = () => {
     category: "",
     transactionDate: "",
     description: "",
-    paymentMethod: ""
-
+    paymentMethod: "",
   });
+
+  
 
   const handleChange = (e) => {
     setFormData({
@@ -31,6 +40,7 @@ const TransactionFrom = () => {
     e.preventDefault();
 
     console.log("formdata", formData);
+    console.log(formData);
 
     // API call here
     try {
@@ -118,50 +128,109 @@ const TransactionFrom = () => {
 
         {/* Category */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Category
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="text-sm font-semibold text-gray-700">
+              Category
+            </label>
+
+            <button
+              type="button"
+              onClick={() => setShowCategoryModal(true)}
+              className="flex items-center gap-1 text-sm font-medium text-green-600 hover:text-green-700"
+            >
+              <FaPlus size={12} />
+              Add Category
+            </button>
+          </div>
+
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
+            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-green-500 transition"
           >
             <option value="">Select Category</option>
 
-            {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.name}
-              </option>
-            ))}
+            {categories
+              .filter((cat) => cat.type === formData.type)
+              .map((cat) => (
+                <option key={cat._id} value={cat._id}>
+                  {cat.name}
+                </option>
+              ))}
           </select>
+
+          <p className="mt-2 text- text-gray-500">
+            Can't find your category? Click{" "}
+            <span className="font-medium text-green-600">Add Category</span>.
+          </p>
         </div>
 
         {/* transactionDate */}
-            <div>
+        <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Date
+            Transaction Type
           </label>
-          <input
-            type="date"
-            name="transactionDate"
-            value={formData.transactionDate}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
-          />
+
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  type: "income",
+                  category: "",
+                })
+              }
+              className={`rounded-xl py-3 font-semibold transition ${
+                formData.type === "income"
+                  ? "bg-green-600 text-white"
+                  : "bg-gray-100 hover:bg-gray-200"
+              }`}
+            >
+              💰 Income
+            </button>
+
+            <button
+              type="button"
+              onClick={() =>
+                setFormData({
+                  ...formData,
+                  type: "expense",
+                  category: "",
+                })
+              }
+              className={`rounded-xl py-3 font-semibold transition ${
+                formData.type === "expense"
+                  ? "bg-red-500 text-white"
+                  : "bg-gray-100 hover:bg-gray-200"
+              }`}
+            >
+              💸 Expense
+            </button>
+          </div>
         </div>
-        {/* PaymentMethod */}
+
+        {/* Payment Method */}
         <div>
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             Payment Method
           </label>
-          <input
-            type="text"
-            name="method"
-            placeholder="Food, Salary, Rent..."
-            value={formData.method}
+
+          <select
+            name="paymentMethod"
+            value={formData.paymentMethod}
             onChange={handleChange}
             className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
-          />
+          >
+            <option value="">Select Payment Method</option>
+            <option value="cash">💵 Cash</option>
+            <option value="upi">📱 UPI</option>
+            <option value="credit_card">💳 Credit Card</option>
+            <option value="debit_card">🏦 Debit Card</option>
+            <option value="bank_transfer">🏛 Bank Transfer</option>
+            <option value="other">📦 Other</option>
+          </select>
         </div>
 
         {/* Note */}
@@ -171,9 +240,9 @@ const TransactionFrom = () => {
           </label>
           <textarea
             rows="4"
-            name="note"
+            name="description"
             placeholder="Write a short note..."
-            value={formData.note}
+            value={formData.description}
             onChange={handleChange}
             className="w-full rounded-xl border border-gray-300 px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-green-500 transition"
           />
@@ -188,6 +257,9 @@ const TransactionFrom = () => {
           Add Transaction
         </button>
       </form>
+      {showCategoryModal && (
+        <AddCategoryModal onClose={() => setShowCategoryModal(false)} />
+      )}
     </div>
   );
 };
