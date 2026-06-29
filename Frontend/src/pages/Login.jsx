@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {useNavigate, Link} from 'react-router-dom';
 import api from "../services/api";
+import { useAuth } from "../context/AuthContexts";
+
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +17,8 @@ const Login = () => {
   });
 }
 const navigate = useNavigate();
+const { setUser } = useAuth();
+
 
 async function handleSubmit(e) {
   e.preventDefault();
@@ -23,7 +27,8 @@ async function handleSubmit(e) {
    try {
     const response = await api.post("/users/login", formData);
 
-    console.log(response.data);
+    setUser(response.data.user)
+    localStorage.setItem("token", response.data.token);
 
     alert("Login Successful!");
     navigate("/dashboard");
@@ -99,7 +104,7 @@ async function handleSubmit(e) {
             type="submit"
             className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
           >
-            Register
+           Login
           </button>
         </form>
 
@@ -109,7 +114,7 @@ async function handleSubmit(e) {
             to="/register"
             className="text-green-600 font-medium ml-1 hover:underline"
           >
-            Login
+            Register
           </Link>
         </p>
       </div>
