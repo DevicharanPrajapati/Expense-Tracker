@@ -1,7 +1,7 @@
 import BalanceCard from "../components/BalanceCard";
 import TransactionList from "../components/TransactionList";
 import AddTransaction from "../components/AddTransaction";
-import Categories from "./Categories";
+// import Categories from "./Categories";
 // import { useAuth } from "../context/AuthContexts";
 // import { useEffect } from "react";
 // import api from "../services/api"
@@ -32,7 +32,6 @@ const Dashboard = () => {
         {/* Right */}
         <div className="lg:col-span-1">
           <TransactionList />
-          <Categories />
         </div>
       </div>
     </div>

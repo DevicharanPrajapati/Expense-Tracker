@@ -32,8 +32,8 @@ const TransactionList = () => {
   ]);
 
   const { token } = useAuth();
-  console.log(token)
-  console.log(localStorage.getItem("token"));
+  // console.log(token)
+  // console.log(localStorage.getItem("token"));
   useEffect(() => {
     const fetchTransaction = async () => {
       try {

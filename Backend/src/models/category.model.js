@@ -15,12 +15,6 @@ const categorySchema = new mongoose.Schema(
       lowercase : true
     },
 
-    type: {
-      type: String,
-      enum: ["income", "expense"],
-      required: true,
-    },
-
     isDefault: {
       type: Boolean,
       default: false,

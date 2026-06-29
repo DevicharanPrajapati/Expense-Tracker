@@ -25,7 +25,7 @@ const AddTransaction = () => {
       {/* Button */}
       <div className="mt-6">
         <Link
-        to={"/transition"}>
+        to={"/add-transaction"}>
         <button className="flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition">
           <FaPlus />
           Add Transaction

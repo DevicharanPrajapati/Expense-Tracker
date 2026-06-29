@@ -6,7 +6,8 @@ import Register from "./pages/Register";
 import MainLayout from "./layouts/MainLayout";
 import TransactionFrom from "./components/TransactionForm";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import {CategoryProvider} from "./context/CategoryContext";
+import Categories from "./pages/Categories";
+import CategoryForm from "./components/CategoryForm";
 
 function App() {
   return (
@@ -21,16 +22,25 @@ function App() {
           }
         />
         <Route
-          path="/transition"
+          path="/add-transaction"
           element={
             <ProtectedRoute>
-              <CategoryProvider>
               <TransactionFrom />
-              </CategoryProvider>
+            </ProtectedRoute>
+          }
+        />
+
+           <Route
+          path="/addCategory"
+          element={
+            <ProtectedRoute>
+              <CategoryForm />
             </ProtectedRoute>
           }
         />
       </Route>
+
+   
 
       <Route path="/" element={<Login />} />
       <Route path="/login" element={<Login />} />

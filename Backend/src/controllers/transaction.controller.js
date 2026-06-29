@@ -15,9 +15,6 @@ const createTransaction = async (req, res) => {
     }
     console.log(category);
 
-    console.log("User ID:", req.user.id);
-    console.log("Category ID:", category);
-
     const categoryExists = await Category.findOne({
       _id: category,
       userId: req.user.id,

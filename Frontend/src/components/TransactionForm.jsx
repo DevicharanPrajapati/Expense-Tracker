@@ -1,21 +1,33 @@
 // import React from 'react'
 import api from "../services/api.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContexts.jsx";
-import { useCategory } from "../context/CategoryContext.jsx";
 // Add at the top
 import { FaPlus } from "react-icons/fa6";
-import AddCategoryModal from "../components/CategoryForm.jsx";
-
 
 const TransactionFrom = () => {
   const navigate = useNavigate();
   const { token } = useAuth();
-  // console.log(token);
-  const { categories } = useCategory();
-
-  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  // console.log(token)
+  const [categories, setCategories] = useState([]);
+  //AllCatecory Api Call
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const resCat = await api.get("/category/getCategory", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log(resCat.data);
+        setCategories(resCat.data.categories);
+      } catch (error) {
+        console.log(error.resCat?.data || error.message);
+      }
+    }
+    fetchCategories();
+  }, [token]);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -27,7 +39,10 @@ const TransactionFrom = () => {
     paymentMethod: "",
   });
 
-  
+  //Category button
+  function handaleOnClick() {
+    navigate("/addCategory");
+  }
 
   const handleChange = (e) => {
     setFormData({
@@ -125,45 +140,37 @@ const TransactionFrom = () => {
             </select>
           </div>
         </div>
-
+        {/* <CategoryForm /> */}
         {/* Category */}
         <div>
           <div className="flex items-center justify-between mb-2">
             <label className="text-sm font-semibold text-gray-700">
               Category
             </label>
-
-            <button
-              type="button"
-              onClick={() => setShowCategoryModal(true)}
-              className="flex items-center gap-1 text-sm font-medium text-green-600 hover:text-green-700"
-            >
-              <FaPlus size={12} />
-              Add Category
-            </button>
           </div>
-
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-green-500 transition"
-          >
-            <option value="">Select Category</option>
-
-            {categories
-              .filter((cat) => cat.type === formData.type)
-              .map((cat) => (
+          <div className="flex gap-4 ">
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-green-500 transition"
+            >
+              <option value="">Select Category</option>
+              {categories.map((cat) => (
                 <option key={cat._id} value={cat._id}>
                   {cat.name}
                 </option>
               ))}
-          </select>
+            </select>
 
-          <p className="mt-2 text- text-gray-500">
-            Can't find your category? Click{" "}
-            <span className="font-medium text-green-600">Add Category</span>.
-          </p>
+            <button
+              type="button"
+              onClick={handaleOnClick}
+              className="px-5 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition"
+            >
+              + Add Category
+            </button>
+          </div>
         </div>
 
         {/* transactionDate */}
@@ -257,9 +264,6 @@ const TransactionFrom = () => {
           Add Transaction
         </button>
       </form>
-      {showCategoryModal && (
-        <AddCategoryModal onClose={() => setShowCategoryModal(false)} />
-      )}
     </div>
   );
 };
