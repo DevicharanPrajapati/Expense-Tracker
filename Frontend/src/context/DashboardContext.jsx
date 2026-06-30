@@ -20,7 +20,7 @@ export const DashboardProvider = ({ children }) => {
       });
 
       setDashboard(res.data.dashboard);
-      setRecentTransactions(res.data.dashboard.recentTransactions);
+      // setRecentTransactions(res.data.dashboard.recentTransactions);
     } catch (error) {
       console.log(error.response?.data || error.message);
     } finally {
