@@ -9,6 +9,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import CategoryForm from "./components/CategoryForm";
 import NotFound from "./pages/NotFound";
 import Income from "./pages/Income";
+import Expense from "./pages/Expense";
 
 function App() {
   return (
@@ -28,6 +29,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Income />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/expense"
+          element={
+            <ProtectedRoute>
+              <Expense />
             </ProtectedRoute>
           }
         />

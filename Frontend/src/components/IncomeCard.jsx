@@ -1,8 +1,11 @@
 import { useDashboard } from "../context/DashboardContext";
 import { FaIndianRupeeSign } from "react-icons/fa6";
+import AddTransaction from "./AddTransaction";
 
 const IncomeCard = ()=>{
   const {dashboard} = useDashboard();
+  
+  
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 w-full">
       {/* Header */}
@@ -21,6 +24,7 @@ const IncomeCard = ()=>{
           {dashboard?.totalIncome}
         </span>
       </div>
+          
     </div>
   );
 };

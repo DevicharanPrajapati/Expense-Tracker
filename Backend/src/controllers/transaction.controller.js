@@ -237,7 +237,8 @@ const incomeTransactions = async (req, res) => {
     const incomeData = await Transaction.find({
       user: user,
       type: "income",
-    }).populate("category", "name");
+    }).populate("category", "name")
+      .sort({transactionDate : -1});
 
     if (incomeData.length === 0) {
       return res

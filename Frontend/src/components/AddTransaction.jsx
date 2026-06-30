@@ -2,7 +2,7 @@
 import { FaArrowTrendUp, FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
-const AddTransaction = () => {
+const AddTransaction = ({heading}) => {
   return (
     <div className="bg-white rounded-2xl shadow-md p-6">
       {/* Header */}
@@ -28,7 +28,7 @@ const AddTransaction = () => {
         to={"/add-transaction"}>
         <button className="flex items-center gap-2 bg-green-600 text-white px-5 py-3 rounded-lg hover:bg-green-700 transition">
           <FaPlus />
-          Add Transaction
+          {heading}
         </button>
         </Link>
       </div>
