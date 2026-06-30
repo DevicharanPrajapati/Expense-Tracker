@@ -99,7 +99,7 @@ const getDashboard = async (req, res) => {
       user: userId,
     })
       .populate("category", "name")
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: -1 }, {transactionDate : -1})
       .limit(5);
 
     // Total Transactions
@@ -125,6 +125,73 @@ const getDashboard = async (req, res) => {
   }
 };
 
+const filterTransaction = async (req, res) => {
+  try {
+    const { filter } = req.query;
+
+    let startDate = new Date();
+    let endDate = new Date();
+
+    switch (filter) {
+      case "today":
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(23, 59, 59, 999);
+        break;
+
+      case "week":
+        startDate.setDate(startDate.getDate() - startDate.getDay());
+        startDate.setHours(0, 0, 0, 0);
+        break;
+
+      case "month":
+        startDate = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth(),
+          1
+        );
+        endDate = new Date(
+          startDate.getFullYear(),
+          startDate.getMonth() + 1,
+          0,
+          23,
+          59,
+          59,
+          999
+        );
+        break;
+
+      case "year":
+        startDate = new Date(startDate.getFullYear(), 0, 1);
+        endDate = new Date(startDate.getFullYear(), 11, 31, 23, 59, 59, 999);
+        break;
+
+      default:
+        return res.status(400).json({
+          success: false,
+          message: "Invalid filter",
+        });
+    }
+
+    const transactions = await Transaction.find({
+      user: req.user.id,
+      transactionDate: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    }).sort({ transactionDate: -1 });
+
+    res.status(200).json({
+      success: true,
+      transactions,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const showAllTransaction = async (req, res) => {
   try {
     const user = req.user.id;
@@ -136,7 +203,7 @@ const showAllTransaction = async (req, res) => {
     const transactions = await Transaction.find({ user }).populate(
       "category",
       "name",
-    );
+    ).sort({ transactionDate: -1 });
 
     if (transactions.length === 0) {
       return res
@@ -237,4 +304,5 @@ module.exports = {
   incomeTransactions,
   expenseTransactions,
   getDashboard,
+  filterTransaction
 };

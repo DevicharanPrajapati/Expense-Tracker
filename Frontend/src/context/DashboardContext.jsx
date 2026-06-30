@@ -7,7 +7,7 @@ const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
   const { token } = useAuth();
 
-  const [dashboard, setDashboard] = useState(null);
+  const [dashboard, setDashboard] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const fetchDashboard = async () => {

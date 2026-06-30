@@ -6,6 +6,7 @@ const {
   incomeTransactions,
   expenseTransactions,
   getDashboard,
+  filterTransaction
 } = require("../controllers/transaction.controller");
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.get("/showTransaction", verifyToken, showAllTransaction);
 router.get("/incomeTransaction", verifyToken, incomeTransactions);
 router.get("/expenseTransaction", verifyToken, expenseTransactions);
 router.get("/dashboard", verifyToken, getDashboard);
+router.get("/filter", verifyToken, filterTransaction);
 
 
 

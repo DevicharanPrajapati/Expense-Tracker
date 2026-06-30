@@ -17,7 +17,7 @@ const ExpenseCard = () => {
       {/* Balance */}
       <div className="flex items-center mt-6">
         <FaIndianRupeeSign className="text-3xl text-gray-800" />
-        <span className="text-4xl font-bold text-gray-900">
+        <span className="text-4xl font-bold text-red-500">
           {dashboard?.totalExpense}
         </span>
       </div>
