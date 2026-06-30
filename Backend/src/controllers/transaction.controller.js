@@ -169,7 +169,6 @@ const filterTransaction = async (req, res) => {
           message: "Invalid filter",
         });
     }
-  
 
     const query = {
       user: req.user.id,
@@ -182,10 +181,17 @@ const filterTransaction = async (req, res) => {
       };
     }
 
-
     const transactions = await Transaction.find(query).sort({
       transactionDate: -1,
     });
+
+    if (transactions.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No transactions found for this filter.",
+        transactions: [],
+      });
+    }
 
     res.status(200).json({
       success: true,

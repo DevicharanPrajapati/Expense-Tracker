@@ -1,15 +1,13 @@
-// import React from "react";
-import { useState, useEffect } from "react";
-import api from "../services/api";
-import { useAuth } from "../context/AuthContexts";
+
 import { FaArrowTrendUp } from "react-icons/fa6";
+import { useFilterTransaction } from "../context/FilterTransactionContext";
 
 //style code
 
 const FilterCard = () => {
-  const { token } = useAuth();
+  const { filter, getFilteredTransactions } = useFilterTransaction();
 
-  const [filter, setFilter] = useState("all");
+  // console.log("Current Filter:", filter);
 
   const styleBtn = (value) =>
     `p-2 px-6 rounded-md transition-colors border-1 ${
@@ -18,58 +16,41 @@ const FilterCard = () => {
         : "bg-emerald-300 text-black hover:bg-emerald-200"
     }`;
 
-  useEffect(() => {
-    const filterData = async () => {
-      try {
-        const response = await api.get(`/transaction/filter?filter=${filter}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        console.log(response.data);
-        
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    filterData();
-  }, [filter, token]);
 
   return (
     <div className="bg-emerald-100 p-4  rounded-xl shadow-md mb-4">
       <h2
         className="flex items-center gap-2 text-md font-bold mb-4 
-       text-cyan-700 "
+       text-olive-800 "
       >
-        <FaArrowTrendUp color="olive" />
-        Filter Your Data
+        <FaArrowTrendUp color="green" />
+        Filter Your Transactions
       </h2>
 
       <div className="flex items-center gap-2 justify-around">
         <button
           className={styleBtn("today")}
-          onClick={() => setFilter("today")}
+          onClick={() => getFilteredTransactions("today")}
         >
           Today
         </button>
 
-        <button className={styleBtn("week")} onClick={() => setFilter("week")}>
+        <button className={styleBtn("week")} onClick={() => getFilteredTransactions   ("week")}>
           Week
         </button>
 
         <button
           className={styleBtn("month")}
-          onClick={() => setFilter("month")}
+          onClick={() => getFilteredTransactions("month")}
         >
           Month
         </button>
 
-        <button className={styleBtn("year")} onClick={() => setFilter("year")}>
+        <button className={styleBtn("year")} onClick={() => getFilteredTransactions("year")}>
           Year
         </button>
 
-        <button className={styleBtn("all")} onClick={() => setFilter("all")}>
+        <button className={styleBtn("all")} onClick={() => getFilteredTransactions("all")}>
           All
         </button>
       </div>

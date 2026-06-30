@@ -9,7 +9,7 @@ export const DashboardProvider = ({ children }) => {
 
   const [dashboard, setDashboard] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [recentTransactions, setRecentTransactions] = useState([]);
+  // const [recentTransactions, setRecentTransactions] = useState([]);
 
   const fetchDashboard = async () => {
     try {
@@ -40,7 +40,7 @@ export const DashboardProvider = ({ children }) => {
         dashboard,
         loading,
         fetchDashboard,
-        recentTransactions,
+        // recentTransactions,
       }}
     >
       {children}

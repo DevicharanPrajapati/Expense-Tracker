@@ -4,11 +4,12 @@ import AddTransaction from "../components/AddTransaction";
 import IncomeCard from "../components/IncomeCard";
 import ExpenseCard from "../components/ExpenseCard";
 import SevingCard from "../components/SavingCard";
-import { useDashboard } from "../context/DashboardContext";
 import FilterCard from "../components/FilterCard";
+import { useFilterTransaction } from "../context/FilterTransactionContext";
+
 
 const Dashboard = () => {
-const {recentTransactions} = useDashboard();
+const { filterData , message } = useFilterTransaction();
 const title = "Add Transaction"
 
   return (
@@ -33,13 +34,14 @@ const title = "Add Transaction"
           <FilterCard/>
           <AddTransaction  heading={title}/>
           <div className="mt-4">
-        
+            
       </div>
         </div>
 
         {/* Right */}
         <div className="lg:col-span-1">
-          <TransactionList dataTransactions={recentTransactions}/>
+          <TransactionList dataTransactions={filterData } />
+          <p className="text-red-600 mt-4 pl-6">{message}</p>
         </div>
       </div>
     </div>

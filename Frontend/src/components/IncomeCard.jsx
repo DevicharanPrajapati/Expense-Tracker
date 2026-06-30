@@ -1,6 +1,6 @@
 import { useDashboard } from "../context/DashboardContext";
 import { FaIndianRupeeSign } from "react-icons/fa6";
-import AddTransaction from "./AddTransaction";
+// import AddTransaction from "./AddTransaction";
 
 const IncomeCard = ()=>{
   const {dashboard} = useDashboard();

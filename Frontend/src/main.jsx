@@ -5,13 +5,16 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContexts.jsx";
 import { DashboardProvider } from "./context/DashboardContext.jsx";
+import { FilterTransactionProvider } from "./context/FilterTransactionContext.jsx";
 
 createRoot(document.getElementById("root")).render(
    <AuthProvider>
   <BrowserRouter>
    <DashboardProvider>
-    <App />
-    </DashboardProvider>
+    <FilterTransactionProvider>
+      <App />
+    </FilterTransactionProvider>
+   </DashboardProvider>
   </BrowserRouter>
   </AuthProvider>
 );
