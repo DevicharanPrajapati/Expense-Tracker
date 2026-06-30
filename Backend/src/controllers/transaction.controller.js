@@ -55,7 +55,6 @@ const getDashboard = async (req, res) => {
   const userId = new mongoose.Types.ObjectId(req.user.id);
 
   try {
-
     // Total Income
     const incomeResult = await Transaction.aggregate([
       {
@@ -99,7 +98,7 @@ const getDashboard = async (req, res) => {
       user: userId,
     })
       .populate("category", "name")
-      .sort({ createdAt: -1 }, {transactionDate : -1})
+      .sort({ createdAt: -1 }, { transactionDate: -1 })
       .limit(5);
 
     // Total Transactions
@@ -144,11 +143,7 @@ const filterTransaction = async (req, res) => {
         break;
 
       case "month":
-        startDate = new Date(
-          startDate.getFullYear(),
-          startDate.getMonth(),
-          1
-        );
+        startDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
         endDate = new Date(
           startDate.getFullYear(),
           startDate.getMonth() + 1,
@@ -156,7 +151,7 @@ const filterTransaction = async (req, res) => {
           23,
           59,
           59,
-          999
+          999,
         );
         break;
 
@@ -164,7 +159,10 @@ const filterTransaction = async (req, res) => {
         startDate = new Date(startDate.getFullYear(), 0, 1);
         endDate = new Date(startDate.getFullYear(), 11, 31, 23, 59, 59, 999);
         break;
-
+      case "all":
+        startDate = null;
+        endDate = null;
+        break;
       default:
         return res.status(400).json({
           success: false,
@@ -200,10 +198,9 @@ const showAllTransaction = async (req, res) => {
         .status(400)
         .json({ success: false, message: "User Not found" });
     }
-    const transactions = await Transaction.find({ user }).populate(
-      "category",
-      "name",
-    ).sort({ transactionDate: -1 });
+    const transactions = await Transaction.find({ user })
+      .populate("category", "name")
+      .sort({ transactionDate: -1 });
 
     if (transactions.length === 0) {
       return res
@@ -237,8 +234,9 @@ const incomeTransactions = async (req, res) => {
     const incomeData = await Transaction.find({
       user: user,
       type: "income",
-    }).populate("category", "name")
-      .sort({transactionDate : -1});
+    })
+      .populate("category", "name")
+      .sort({ transactionDate: -1 });
 
     if (incomeData.length === 0) {
       return res
@@ -305,5 +303,5 @@ module.exports = {
   incomeTransactions,
   expenseTransactions,
   getDashboard,
-  filterTransaction
+  filterTransaction,
 };

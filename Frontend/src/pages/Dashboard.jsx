@@ -5,6 +5,7 @@ import IncomeCard from "../components/IncomeCard";
 import ExpenseCard from "../components/ExpenseCard";
 import SevingCard from "../components/SavingCard";
 import { useDashboard } from "../context/DashboardContext";
+import FilterCard from "../components/FilterCard";
 
 const Dashboard = () => {
 const {recentTransactions} = useDashboard();
@@ -26,9 +27,14 @@ const title = "Add Transaction"
 
       {/* Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
         {/* Left */}
         <div className="lg:col-span-2">
+          <FilterCard/>
           <AddTransaction  heading={title}/>
+          <div className="mt-4">
+        
+      </div>
         </div>
 
         {/* Right */}

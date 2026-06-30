@@ -6,6 +6,7 @@ import ExpenseCard from "../components/ExpenseCard";
 import SevingCard from "../components/SavingCard";
 import AddTransaction from "../components/AddTransaction";
 import { useDashboard } from "../context/DashboardContext";
+import FilterCard from "../components/FilterCard";
 
 export const Income = () => {
   const title = "Add Income";
@@ -18,7 +19,7 @@ export const Income = () => {
   const incomeTransactions = recentTransactions.filter(
     (transaction) => transaction.type === "income",
   );
- 
+
   return (
     <div className="min-h-screen bg-gray-100 p-6 rounded-2xl">
       {/* Header */}
@@ -26,24 +27,18 @@ export const Income = () => {
       <p className="text-gray-500 mb-8">Let's manage your Income.</p>
 
       {/* Balance Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <BalanceCard />
-        <IncomeCard />
-        <ExpenseCard />
-        <SevingCard />
-      </div>
 
       {/* Bottom Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left */}
-        <div className="lg:col-span-2 flex gap-4">
-          <IncomeCard />
-          <AddTransaction heading={title} />
-        </div>
-
-        {/* Right */}
+        <IncomeCard />
+        <FilterCard />
+        <AddTransaction heading={title} />
         <div className="lg:col-span-1">
-          <TransactionList heading={titleInc} dataTransactions={incomeTransactions} />
+          <TransactionList
+            heading={titleInc}
+            dataTransactions={incomeTransactions}
+          />
         </div>
       </div>
     </div>
