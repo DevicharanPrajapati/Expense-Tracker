@@ -42,14 +42,12 @@ const ProfileUpdateProvider = ({ children }) => {
         },
       );
       // console.log("Password update response:", response.data);
+      
       return response.data.message;
     } catch (error) {
       console.error(error.message);
       // console.log(error.response?.data);
       // console.log(error.response?.status);
-    }finally {
-      alert("Password update request completed.");
-      navigation.navigate("/profile");
     }
   };
 
