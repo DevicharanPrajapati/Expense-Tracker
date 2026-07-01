@@ -48,6 +48,79 @@ const userRegistration = async (req, res) => {
   }
 };
 
+
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email and password is required!" });
+  }
+
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(400).json({ success: false, message: "User not found" });
+  }
+  const hashedPassword = user.password;
+
+  const correctPass = await bcrypt.compare(password, hashedPassword);
+  if (!correctPass) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid email or password",
+    });
+  }
+
+  const token = jwt.sign(
+    {
+      id: user._id,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRES_IN,
+    },
+  );
+
+  return res.status(201).json({
+    success: true,
+    message: "User login successfully!",
+    token,
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    },
+  });
+};
+
+const profile = async (req, res) => {
+  try {
+    const profileData = await User.findById(req.user.id).select(
+      "-password  -updatedAt",
+    );
+
+    if (!profileData) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Profile fetched successful",
+      profile: profileData,      
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 const updateProfile = async (req, res) => {
   try {
     const { name } = req.body;
@@ -132,78 +205,6 @@ const updatePassword = async (req, res) => {
       success: true,
       message: "user updated successfully",
       user: updatedPassword,});
-  } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
-const login = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Email and password is required!" });
-  }
-
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(400).json({ success: false, message: "User not found" });
-  }
-  const hashedPassword = user.password;
-
-  const correctPass = await bcrypt.compare(password, hashedPassword);
-  if (!correctPass) {
-    return res.status(401).json({
-      success: false,
-      message: "Invalid email or password",
-    });
-  }
-
-  const token = jwt.sign(
-    {
-      id: user._id,
-    },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: process.env.JWT_EXPIRES_IN,
-    },
-  );
-  console.log(user);
-
-  return res.status(201).json({
-    success: true,
-    message: "User login successfully!",
-    token,
-    user: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-    },
-  });
-};
-
-const profile = async (req, res) => {
-  try {
-    const profileData = await User.findById(req.user.id).select(
-      "-password  -updatedAt",
-    );
-
-    if (!profileData) {
-      return res.status(404).json({
-        success: false,
-        message: "User not found",
-      });
-    }
-
-    return res.status(200).json({
-      success: true,
-      message: "Profile fetched successful",
-      profile: profileData,      
-    });
   } catch (error) {
     return res.status(400).json({
       success: false,

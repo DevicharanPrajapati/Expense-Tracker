@@ -6,15 +6,18 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContexts.jsx";
 import { BalanceDataProvider } from "./context/BalanceDataContext.jsx";
 import { FilterTransactionProvider } from "./context/FilterTransactionContext.jsx";
+import { ProfileUpdateProvider } from "./context/ProfileUpdateContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-   <AuthProvider>
-  <BrowserRouter>
-   <BalanceDataProvider>
-    <FilterTransactionProvider>
-      <App />
-    </FilterTransactionProvider>
-   </BalanceDataProvider>
-  </BrowserRouter>
-  </AuthProvider>
+  <AuthProvider>
+    <BrowserRouter>
+      <BalanceDataProvider>
+        <FilterTransactionProvider>
+          <ProfileUpdateProvider>
+            <App />
+          </ProfileUpdateProvider>
+        </FilterTransactionProvider>
+      </BalanceDataProvider>
+    </BrowserRouter>
+  </AuthProvider>,
 );

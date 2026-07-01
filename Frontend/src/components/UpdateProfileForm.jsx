@@ -1,18 +1,24 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContexts";
 import { FaUser } from "react-icons/fa";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import { useProfileUpdate} from "../context/ProfileUpdateContext";
 
 const UpdateProfileForm = () => {
   const { user } = useAuth();
+  const { updateProfile } = useProfileUpdate();
+  const navigate = useNavigate();
+  
 
   const [name, setName] = useState(user?.name || "");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // API Call Here
-    console.log({ name });
+   await updateProfile(name);
+   alert("Profile updated successfully!");
+   navigate("/profile");
   };
 
   return (
@@ -62,16 +68,14 @@ const UpdateProfileForm = () => {
             </button>
             </Link>
 
-           <Link
-            to="/profile"
-            >
+          
             <button
               type="submit"
               className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
             >
               Save Changes
             </button>
-            </Link>
+            
           </div>
         </form>
       </div>

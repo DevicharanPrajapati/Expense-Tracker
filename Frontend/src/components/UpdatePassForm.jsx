@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useProfileUpdate } from "../context/ProfileUpdateContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const UpdatePasswordForm = () => {
+  const { updatePassword } = useProfileUpdate();
+
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     oldPassword: "",
     newPassword: "",
@@ -12,13 +19,16 @@ const UpdatePasswordForm = () => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
+
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // API Call
     console.log(formData);
+    await updatePassword(formData);
+    alert("Password updated successfully!");
   };
 
   return (
@@ -40,14 +50,24 @@ const UpdatePasswordForm = () => {
               Old Password
             </label>
 
-            <input
-              type="password"
-              name="oldPassword"
-              value={formData.oldPassword}
-              onChange={handleChange}
-              placeholder="Enter old password"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
+            <div className="relative">
+              <input
+                type={showOldPassword ? "text" : "password"}
+                name="oldPassword"
+                value={formData.oldPassword}
+                onChange={handleChange}
+                placeholder="Enter old password"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowOldPassword(!showOldPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showOldPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
 
           {/* New Password */}
@@ -56,37 +76,43 @@ const UpdatePasswordForm = () => {
               New Password
             </label>
 
-            <input
-              type="password"
-              name="newPassword"
-              value={formData.newPassword}
-              onChange={handleChange}
-              placeholder="Enter new password"
-              className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
+            <div className="relative">
+              <input
+                type={showNewPassword ? "text" : "password"}
+                name="newPassword"
+                value={formData.newPassword}
+                onChange={handleChange}
+                placeholder="Enter new password"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowNewPassword(!showNewPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showNewPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
           </div>
 
           {/* Buttons */}
           <div className="flex gap-4 pt-2">
-            <Link
-            to="/profile">
-            <button
-              type="button"
-              className="flex-1 border border-gray-300 rounded-xl py-3 font-medium hover:bg-gray-100 transition"
-            >
-              Cancel
-            </button>
+            <Link to="/profile">
+              <button
+                type="button"
+                className="flex-1 border border-gray-300 rounded-xl py-3 font-medium hover:bg-gray-100 transition"
+              >
+                Cancel
+              </button>
             </Link>
 
-            <Link
-            to="/profile">
               <button
                 type="submit"
                 className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 font-semibold transition"
               >
                 Update Password
               </button>
-            </Link>
           </div>
         </form>
       </div>
