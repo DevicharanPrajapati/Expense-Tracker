@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // local development
-      "https://expense-tracker-eight-zeta-12.vercel.app/", // your Vercel URL
+      "https://expense-tracker-eight-zeta-12.vercel.app", // your Vercel URL
     ],
     credentials: true,
   }),
