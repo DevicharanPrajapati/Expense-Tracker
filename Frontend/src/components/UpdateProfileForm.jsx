@@ -51,11 +51,11 @@ const UpdateProfileForm = () => {
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <Link to="/profile">
               <button
                 type="button"
-                className="flex-1 border border-gray-300 py-3 rounded-xl font-medium hover:bg-gray-100 transition"
+                className="flex-1 border border-gray-300 py-3 p-4 rounded-xl font-medium hover:bg-gray-100 transition"
               >
                 Cancel
               </button>

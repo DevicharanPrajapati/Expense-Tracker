@@ -101,7 +101,7 @@ const UpdatePasswordForm = () => {
             <Link to="/profile">
               <button
                 type="button"
-                className="flex-1 border border-gray-300 rounded-xl py-3 font-medium hover:bg-gray-100 transition"
+                className="flex-1 border border-gray-300 rounded-xl py-3 p-4  font-medium hover:bg-gray-100 transition"
               >
                 Cancel
               </button>
