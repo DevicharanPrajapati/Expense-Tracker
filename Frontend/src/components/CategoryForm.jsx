@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContexts";
 import { useNavigate, Link } from "react-router-dom";
 
 const CategoryForm = () => {
-  const { token } = useAuth();
+  const { token , loading} = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({

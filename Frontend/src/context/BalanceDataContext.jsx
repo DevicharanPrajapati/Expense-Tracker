@@ -40,8 +40,6 @@ export const BalanceDataProvider = ({ children }) => {
       value={{
         balance,
         loading,
-        // fetchBalance,
-        // recentTransactions,
       }}
     >
       {children}

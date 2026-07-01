@@ -6,7 +6,7 @@ import { useProfileUpdate } from "../context/ProfileUpdateContext";
 
 const UpdateProfileForm = () => {
   const { user } = useAuth();
-  const { updateProfile } = useProfileUpdate();
+  const { updateProfile} = useProfileUpdate();
   // const navigate = useNavigate();
 
   const [name, setName] = useState(user?.name || "");
@@ -63,6 +63,7 @@ const UpdateProfileForm = () => {
 
             <button
               type="submit"
+              disabled={loading}
               className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
             >
               Save Changes

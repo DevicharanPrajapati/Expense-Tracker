@@ -6,10 +6,14 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
       if (!token) return;
+      if (loading) return; // Prevent duplicate clicks
+
+      setLoading(true);
 
       try {
         const response = await api.get("/users/profile", {
@@ -22,16 +26,18 @@ export const AuthProvider = ({ children }) => {
         setUser(response.data.profile);
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchProfile();
-  }, [token]);
+  }, [token, loading]);
 
   const logout = () => {
-  localStorage.removeItem("token");
-  setUser(null);
-};
+    localStorage.removeItem("token");
+    setUser(null);
+  };
 
   return (
     <AuthContext.Provider
@@ -40,6 +46,8 @@ export const AuthProvider = ({ children }) => {
         setUser,
         token,
         setToken,
+        loading,
+        setLoading,
         logout,
       }}
     >
