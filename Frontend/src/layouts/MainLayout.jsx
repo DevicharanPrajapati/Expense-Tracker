@@ -1,14 +1,23 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import { useState } from "react";
 
 function MainLayout() {
+  const [isOpen, setIsOpen] = useState(false);
+
+
   return (
     <div className="min-h-screen">
-      <Navbar />
+      <Navbar 
+      isOpen={isOpen}
+      setIsOpen={setIsOpen} 
+      />
 
       <div className="flex">
-        <Sidebar />
+        <Sidebar 
+         isOpen={isOpen} setIsOpen={setIsOpen}
+        />
 
         <main className="flex-1 p-5">
           <Outlet />

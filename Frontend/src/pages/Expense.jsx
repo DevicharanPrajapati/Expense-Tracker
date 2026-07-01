@@ -20,27 +20,31 @@ const Expense = () => {
     0,
   );
 
-    if (expenseTransactions.length === 0) {
+  if (expenseTransactions.length === 0) {
     var errMessage = "No Transactions Found";
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-6 rounded-2xl">
+    <div className="min-h-screen bg-gray-100 p-4 sm:p-6 rounded-2xl">
       {/* Header */}
-      <h2 className="text-3xl font-bold text-gray-800">Expense</h2>
-      <p className="text-gray-500 mb-8">Let's manage your Expenses.</p>
+      <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">Expense</h2>
+      <p className="text-sm sm:text-base text-gray-500 mb-6 sm:mb-8">
+        Let's manage your Expenses.
+      </p>
 
       {/* Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Left */}
-        <div className="lg:col-span-2 flex gap-4 ">
+        {/* Top Cards */}
+        <div className="lg:col-span-2 flex flex-col lg:flex-row gap-4">
           <ExpenseCard amount={filterAmount} />
           <FilterCard />
         </div>
 
+        {/* Form */}
         <AddTransaction heading={title} />
-        {/* Right */}
-        <div className="lg:col-span-1 ">
+
+        {/* Transactions */}
+        <div className="lg:col-span-1">
           <TransactionList
             heading={titleTran}
             dataTransactions={expenseTransactions}
