@@ -1,6 +1,4 @@
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
-import { useFilterTransaction } from "../context/FilterTransactionContext";
-
 
 const TransactionList = ({heading, dataTransactions, errMessage}) => {
 

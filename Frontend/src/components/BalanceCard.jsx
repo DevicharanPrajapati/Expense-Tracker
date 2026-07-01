@@ -1,9 +1,10 @@
 import { FaIndianRupeeSign } from "react-icons/fa6";
-import { useDashboard } from "../context/DashboardContext";
+import { useBalance } from "../context/BalanceDataContext";
 
 const BalanceCard = () => {
-  const {dashboard} = useDashboard();
-  // console.log(dashboard)
+  const {balance} = useBalance();
+  console.log("Balance in BalanceCard:", balance);
+  const amountColor = balance > 0 ? "text-green-500" : "text-red-500";
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 w-full">
       {/* Header */}
@@ -18,8 +19,8 @@ const BalanceCard = () => {
       {/* Balance */}
       <div className="flex items-center mt-6">
         <FaIndianRupeeSign className="text-3xl text-gray-800" />
-        <span className="text-4xl font-bold text-green-400">
-          {dashboard?.balance}
+        <span className={`text-4xl font-bold ${amountColor}`}>
+          {balance?.toLocaleString()}
         </span>
       </div>
     </div>

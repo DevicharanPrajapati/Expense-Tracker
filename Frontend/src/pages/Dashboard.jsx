@@ -15,6 +15,21 @@ const title = "Add Transaction"
 if(filterData.length === 0){
   var errMessage = "No Transactions Found";
 }
+const filterTransactions = filterData.filter(
+  (transaction) => transaction.type === "income" 
+);
+const filterAmountIncome = filterTransactions.reduce(
+  (total, transaction) => total + transaction.amount,
+  0,
+);
+
+const filterTransactionsExpense = filterData.filter(
+  (transaction) => transaction.type === "expense"
+);
+const filterAmountExpense = filterTransactionsExpense.reduce(
+  (total, transaction) => total + transaction.amount,
+  0
+);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 rounded-2xl">
@@ -25,9 +40,9 @@ if(filterData.length === 0){
       {/* Balance Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <BalanceCard />
-        <IncomeCard />
-        <ExpenseCard />
-        <SevingCard />
+        <IncomeCard  amount={filterAmountIncome} />
+        <ExpenseCard amount={filterAmountExpense} />
+        <SevingCard  amount={filterAmountIncome - filterAmountExpense}/>
       </div>
 
       {/* Bottom Section */}

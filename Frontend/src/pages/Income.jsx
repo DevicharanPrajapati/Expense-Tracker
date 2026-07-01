@@ -23,6 +23,8 @@ export const Income = () => {
     (total, transaction) => total + transaction.amount,
     0,
   );
+  console.log("Income Transactions:", incomeTransactions);
+  console.log("Total Income Amount:", filterAmount);
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 rounded-2xl">

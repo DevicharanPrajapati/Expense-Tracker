@@ -5,7 +5,7 @@ const {
   showAllTransaction,
   incomeTransactions,
   expenseTransactions,
-  getDashboard,
+  getBalance,
   filterTransaction
 } = require("../controllers/transaction.controller");
 
@@ -15,7 +15,7 @@ router.post("/addTransaction", verifyToken, createTransaction);
 router.get("/showTransaction", verifyToken, showAllTransaction);
 router.get("/incomeTransaction", verifyToken, incomeTransactions);
 router.get("/expenseTransaction", verifyToken, expenseTransactions);
-router.get("/dashboard", verifyToken, getDashboard);
+router.get("/balance", verifyToken, getBalance);
 router.get("/filter", verifyToken, filterTransaction);
 
 

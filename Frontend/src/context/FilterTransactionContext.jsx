@@ -29,7 +29,7 @@ export const FilterTransactionProvider = ({ children }) => {
       setFilter(selectedFilter);
       setFilterData(data.transactions);
       setMessage(data.message);
-      console.log("Filtered Transactions:", data.transactions);
+      // console.log("Filtered Transactions:", data.transactions);
     } catch (error) {
       console.error(error);
       setLoading(false);

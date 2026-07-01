@@ -1,10 +1,8 @@
-import { useDashboard } from "../context/DashboardContext";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 // import AddTransaction from "./AddTransaction";
 
-const IncomeCard = ()=>{
-  const {dashboard} = useDashboard();
-  
+const IncomeCard = ({amount})=>{
+    const amountColor = amount > 0 ? "text-green-500" : "text-red-500";
   
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 w-full">
@@ -20,8 +18,8 @@ const IncomeCard = ()=>{
       {/* Balance */}
       <div className="flex items-center mt-6">
         <FaIndianRupeeSign className="text-3xl text-gray-800" />
-        <span className="text-4xl font-bold text-gray-900">
-          {dashboard?.totalIncome}
+        <span className={`text-4xl font-bold ${amountColor}`}>
+          {amount.toLocaleString()}
         </span>
       </div>
           

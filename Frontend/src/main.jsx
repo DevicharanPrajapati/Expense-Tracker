@@ -4,17 +4,17 @@ import App from "./App.jsx";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContexts.jsx";
-import { DashboardProvider } from "./context/DashboardContext.jsx";
+import { BalanceDataProvider } from "./context/BalanceDataContext.jsx";
 import { FilterTransactionProvider } from "./context/FilterTransactionContext.jsx";
 
 createRoot(document.getElementById("root")).render(
    <AuthProvider>
   <BrowserRouter>
-   <DashboardProvider>
+   <BalanceDataProvider>
     <FilterTransactionProvider>
       <App />
     </FilterTransactionProvider>
-   </DashboardProvider>
+   </BalanceDataProvider>
   </BrowserRouter>
   </AuthProvider>
 );

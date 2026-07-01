@@ -1,7 +1,6 @@
 import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const ExpenseCard = ({amount}) => {
-  // const { dashboard } = useDashboard();
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 w-full">
       {/* Header */}

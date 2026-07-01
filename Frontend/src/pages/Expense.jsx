@@ -32,11 +32,7 @@ const Expense = () => {
       <p className="text-gray-500 mb-8">Let's manage your Expenses.</p>
 
       {/* Balance Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        {/* <BalanceCard /> */}
-        {/* <IncomeCard /> */}
-        {/* <SevingCard /> */}
-      </div>
+    
 
       {/* Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
