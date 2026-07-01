@@ -9,7 +9,6 @@ const ProfileUpdateProvider = ({ children }) => {
 
   const updateProfile = async (name) => {
     try {
-
       //profile update api call
       const response = await api.put(
         "/users/updateProfile",
@@ -18,7 +17,7 @@ const ProfileUpdateProvider = ({ children }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       setUser(response.data.user);
@@ -30,25 +29,28 @@ const ProfileUpdateProvider = ({ children }) => {
     }
   };
 
-   //password update api call
-   const updatePassword = async ({formdata}) => {
-      try {
-        const response = await api.put(
-          "/users/updatePassword",
-          { formdata},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("Password update response:", response.data);
-        console.log("Password update response message:", response.data.message);
-        return response.data.message;
-      } catch (error) {
-        console.error(error);
-        throw error;
-      }
+  //password update api call
+  const updatePassword = async (formdata) => {
+    try {
+      const response = await api.put(
+        "/users/updatePassword",
+        formdata,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      // console.log("Password update response:", response.data);
+      return response.data.message;
+    } catch (error) {
+      console.error(error.message);
+      // console.log(error.response?.data);
+      // console.log(error.response?.status);
+    }finally {
+      alert("Password update request completed.");
+      navigation.navigate("/profile");
+    }
   };
 
   return (

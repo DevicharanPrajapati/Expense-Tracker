@@ -3,7 +3,7 @@ import { useBalance } from "../context/BalanceDataContext";
 
 const BalanceCard = () => {
   const {balance} = useBalance();
-  console.log("Balance in BalanceCard:", balance);
+  
   const amountColor = balance > 0 ? "text-green-500" : "text-red-500";
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 w-full">

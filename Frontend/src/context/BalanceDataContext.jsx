@@ -22,7 +22,7 @@ export const BalanceDataProvider = ({ children }) => {
 
         setBalance(res.data.dashboard.balance);
         // setRecentTransactions(res.data.recentTransactions);
-        console.log("Balance fetched:", res.data.dashboard.balance);
+        // console.log("Balance fetched:", res.data.dashboard.balance);
       } catch (error) {
         console.log(error.response?.data || error.message);
       } finally {

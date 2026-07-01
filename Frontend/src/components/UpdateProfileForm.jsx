@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContexts";
 import { FaUser } from "react-icons/fa";
-import {Link, useNavigate} from "react-router-dom";
-import { useProfileUpdate} from "../context/ProfileUpdateContext";
+import { Link, useNavigate } from "react-router-dom";
+import { useProfileUpdate } from "../context/ProfileUpdateContext";
 
 const UpdateProfileForm = () => {
   const { user } = useAuth();
   const { updateProfile } = useProfileUpdate();
-  const navigate = useNavigate();
-  
+  // const navigate = useNavigate();
 
   const [name, setName] = useState(user?.name || "");
 
@@ -17,8 +16,6 @@ const UpdateProfileForm = () => {
 
     // API Call Here
     updateProfile(name);
-   alert("Profile updated successfully!");
-   navigate("/profile");
   };
 
   return (
@@ -32,9 +29,7 @@ const UpdateProfileForm = () => {
 
           <div>
             <h2 className="text-2xl font-bold">Edit Profile</h2>
-            <p className="text-green-100 text-sm">
-              Update your display name
-            </p>
+            <p className="text-green-100 text-sm">Update your display name</p>
           </div>
         </div>
 
@@ -57,25 +52,21 @@ const UpdateProfileForm = () => {
 
           {/* Buttons */}
           <div className="flex gap-4">
-            <Link
-            to="/profile"
-            >
-            <button
-              type="button"
-              className="flex-1 border border-gray-300 py-3 rounded-xl font-medium hover:bg-gray-100 transition"
-            >
-              Cancel
-            </button>
+            <Link to="/profile">
+              <button
+                type="button"
+                className="flex-1 border border-gray-300 py-3 rounded-xl font-medium hover:bg-gray-100 transition"
+              >
+                Cancel
+              </button>
             </Link>
 
-          
             <button
               type="submit"
               className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
             >
               Save Changes
             </button>
-            
           </div>
         </form>
       </div>
