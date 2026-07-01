@@ -3,9 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 
-// const generatingJwtToken = ()=>{
-
-// }
 
 const userRegistration = async (req, res) => {
   try {
@@ -62,9 +59,9 @@ const updateProfile = async (req, res) => {
     }
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id, // Which user?
-      //  {
-      //    name: name, // What to update?
-      //  },
+       {
+         name: name, // What to update?
+       },
       {
         returnDocument: "after",
       },
@@ -115,10 +112,12 @@ const updatePassword = async (req, res) => {
         .json({ success: false, message: "Old password is incorrect" });
     }
 
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
     const updatedPassword = await User.findByIdAndUpdate(
       user, // Which user?
       {
-        password: newPassword, // What to update?
+        password: hashedNewPassword, // What to update?
       },
       {
         returnDocument: "after",
@@ -182,6 +181,7 @@ const login = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      createdAt: user.createdAt,
     },
   });
 };
@@ -213,6 +213,14 @@ const profile = async (req, res) => {
 };
 
 const logout = async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "No token provided",
+    });
+  }
+
   return res.status(200).json({
     success: true,
     message: "Logout successful!",
