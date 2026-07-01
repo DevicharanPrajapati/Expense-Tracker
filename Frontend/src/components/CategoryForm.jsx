@@ -1,7 +1,7 @@
 import { useState } from "react";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContexts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const CategoryForm = () => {
   const { token } = useAuth();
@@ -97,16 +97,18 @@ const CategoryForm = () => {
 
           {/* Buttons */}
           <div className="flex justify-end gap-3 pt-2">
+          <Link to="/add-transaction">
             <button
               type="button"
               className="px-5 py-2 rounded-xl border border-gray-300 hover:bg-gray-100 transition"
             >
               Cancel
             </button>
+          </Link>
 
             <button
               type="submit"
-              className="px-5 py-2 rounded-xl bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold hover:opacity-90 transition"
+              className="px-5 py-2 rounded-xl bg-linear-to-r from-green-500 to-emerald-600 text-white font-semibold hover:opacity-90 transition"
             >
               Add Category
             </button>
