@@ -2,7 +2,7 @@ import { FaWallet } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import { useAuth } from "../context/AuthContexts";
 
-const Navbar = ({ isOpen, setIsOpen }) => {
+const Navbar = ({setIsOpen }) => {
   const { user } = useAuth();
 
   return (

@@ -10,7 +10,6 @@ function MainLayout() {
   return (
     <div className="min-h-screen">
       <Navbar 
-      isOpen={isOpen}
       setIsOpen={setIsOpen} 
       />
 
