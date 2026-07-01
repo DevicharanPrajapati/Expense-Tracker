@@ -63,7 +63,6 @@ const UpdateProfileForm = () => {
 
             <button
               type="submit"
-              disabled={loading}
               className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
             >
               Save Changes

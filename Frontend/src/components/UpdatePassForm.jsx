@@ -26,7 +26,7 @@ const UpdatePasswordForm = () => {
     e.preventDefault();
 
     // API Call
-    console.log(formData);
+    // console.log(formData);
     updatePassword(formData);
     alert("Password updated successfully!");
   };
