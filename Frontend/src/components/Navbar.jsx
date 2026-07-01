@@ -1,13 +1,13 @@
 import { FaWallet } from "react-icons/fa";
 import { HiMenu } from "react-icons/hi";
 import { useAuth } from "../context/AuthContexts";
+import { Link } from "react-router-dom";
 
-const Navbar = ({setIsOpen }) => {
+const Navbar = ({ setIsOpen }) => {
   const { user } = useAuth();
 
   return (
     <div className="p-2 px-4 sm:px-8 flex justify-between items-center shadow-md">
-      {/* Left */}
       <div className="flex items-center gap-3">
         {/* Hamburger - Mobile Only */}
         <button
@@ -27,18 +27,20 @@ const Navbar = ({setIsOpen }) => {
       </div>
 
       {/* Right */}
-      <div className="flex gap-1 items-center cursor-pointer hover:bg-olive-200 p-2 rounded-xl">
-        <div className="w-10 h-10 bg-green-600 rounded-full flex justify-center items-center">
-          <h2 className="font-bold text-2xl text-center text-amber-50">
-            {user?.name?.charAt(0).toUpperCase()}
-          </h2>
-        </div>
+      <Link to="/profile">
+        <div className="flex gap-1 items-center cursor-pointer hover:bg-olive-200 p-2 rounded-xl">
+          <div className="w-10 h-10 bg-green-600 rounded-full flex justify-center items-center">
+            <h2 className="font-bold text-2xl text-center text-amber-50">
+              {user?.name?.charAt(0).toUpperCase()}
+            </h2>
+          </div>
 
-        <div className="hidden sm:block">
-          <p className="font-semibold">{user?.name}</p>
-          <p>{user?.email}</p>
+          <div className="hidden sm:block">
+            <p className="font-semibold">{user?.name}</p>
+            <p>{user?.email}</p>
+          </div>
         </div>
-      </div>
+      </Link>
     </div>
   );
 };

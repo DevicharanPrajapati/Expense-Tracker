@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { useAuth } from "../context/AuthContexts";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
@@ -48,20 +49,22 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           lg:translate-x-0
         `}
       >
-        <div className="flex items-center gap-3 p-4 mt-6  rounded-xl cursor-pointer border border-gray-200 hover:bg-lime-100 hover:shadow-md transition-all duration-300">
-          <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white">
-            <h2 className="text-2xl font-bold">
-              {user?.name?.charAt(0).toUpperCase() || "U"}
-            </h2>
-          </div>
+        <Link to="/profile">
+          <div className="flex items-center gap-3 p-4 mt-6  rounded-xl cursor-pointer border border-gray-200 hover:bg-lime-100 hover:shadow-md transition-all duration-300">
+            <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white">
+              <h2 className="text-2xl font-bold">
+                {user?.name?.charAt(0).toUpperCase() || "U"}
+              </h2>
+            </div>
 
-          <div className="overflow-hidden">
-            <h3 className="font-semibold text-gray-800 truncate">
-              {user?.name}
-            </h3>
-            <p className="text-sm text-gray-500 truncate">{user?.email}</p>
+            <div className="overflow-hidden">
+              <h3 className="font-semibold text-gray-800 truncate">
+                {user?.name}
+              </h3>
+              <p className="text-sm text-gray-500 truncate">{user?.email}</p>
+            </div>
           </div>
-        </div>
+        </Link>
 
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-2">
