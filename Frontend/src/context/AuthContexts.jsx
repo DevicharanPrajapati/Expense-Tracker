@@ -11,10 +11,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchProfile = async () => {
       if (!token) return;
-      if (loading) return; // Prevent duplicate clicks
-
-      setLoading(true);
-
       try {
         const response = await api.get("/users/profile", {
           headers: {
