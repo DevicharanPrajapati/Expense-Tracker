@@ -1,9 +1,8 @@
-// import { useEffect, useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
-// import api from "../services/api";
-// import { useAuth } from "../context/AuthContexts";
+import { useFilterTransaction } from "../context/FilterTransactionContext";
 
-const TransactionList = ({heading, dataTransactions}) => {
+
+const TransactionList = ({heading, dataTransactions, errMessage}) => {
 
  return (
 
@@ -53,6 +52,7 @@ const TransactionList = ({heading, dataTransactions}) => {
           </div>
         ))}
       </div>
+      <p className="text-red-500">{errMessage}</p>
     </div>
   );
 };

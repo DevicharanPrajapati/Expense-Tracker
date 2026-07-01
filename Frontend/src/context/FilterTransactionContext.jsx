@@ -10,6 +10,7 @@ export const FilterTransactionProvider = ({ children }) => {
   const [filter, setFilter] = useState("all");
   const [filterData, setFilterData] = useState([]);
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const getFilteredTransactions = async (selectedFilter) => {
     if (!token) return;
@@ -23,6 +24,7 @@ export const FilterTransactionProvider = ({ children }) => {
           },
         }
       );
+      setLoading(false);
 
       setFilter(selectedFilter);
       setFilterData(data.transactions);
@@ -30,6 +32,8 @@ export const FilterTransactionProvider = ({ children }) => {
       console.log("Filtered Transactions:", data.transactions);
     } catch (error) {
       console.error(error);
+      setLoading(false);
+      setMessage(error.response?.data?.message || "Error fetching transactions");
     }
   };
   useEffect(() => {
@@ -42,6 +46,7 @@ export const FilterTransactionProvider = ({ children }) => {
         filter,
         filterData,
         message,
+        loading,
         getFilteredTransactions,
       }}
     >

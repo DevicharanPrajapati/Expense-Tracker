@@ -9,7 +9,7 @@ export const DashboardProvider = ({ children }) => {
 
   const [dashboard, setDashboard] = useState(0);
   const [loading, setLoading] = useState(true);
-  // const [recentTransactions, setRecentTransactions] = useState([]);
+  const [recentTransactions, setRecentTransactions] = useState([]);
 
   const fetchDashboard = async () => {
     try {
@@ -20,7 +20,7 @@ export const DashboardProvider = ({ children }) => {
       });
 
       setDashboard(res.data.dashboard);
-      // setRecentTransactions(res.data.dashboard.recentTransactions);
+      setRecentTransactions(res.data.dashboard.recentTransactions);
     } catch (error) {
       console.log(error.response?.data || error.message);
     } finally {
@@ -40,7 +40,7 @@ export const DashboardProvider = ({ children }) => {
         dashboard,
         loading,
         fetchDashboard,
-        // recentTransactions,
+        recentTransactions,
       }}
     >
       {children}

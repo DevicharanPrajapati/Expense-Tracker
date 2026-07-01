@@ -1,7 +1,7 @@
 import { useDashboard } from "../context/DashboardContext";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 
-const SevingCard = () => {
+const SavingCard = () => {
   const { dashboard } = useDashboard();
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 w-full">
@@ -25,4 +25,4 @@ const SevingCard = () => {
   );
 };
 
-export default SevingCard;
+export default SavingCard;

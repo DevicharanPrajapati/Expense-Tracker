@@ -9,8 +9,12 @@ import { useFilterTransaction } from "../context/FilterTransactionContext";
 
 
 const Dashboard = () => {
-const { filterData , message } = useFilterTransaction();
+const { filterData } = useFilterTransaction();
 const title = "Add Transaction"
+
+if(filterData.length === 0){
+  var errMessage = "No Transactions Found";
+}
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 rounded-2xl">
@@ -40,8 +44,7 @@ const title = "Add Transaction"
 
         {/* Right */}
         <div className="lg:col-span-1">
-          <TransactionList dataTransactions={filterData } />
-          <p className="text-red-600 mt-4 pl-6">{message}</p>
+          <TransactionList dataTransactions={filterData } errMessage={errMessage} />
         </div>
       </div>
     </div>

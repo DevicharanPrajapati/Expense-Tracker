@@ -1,8 +1,7 @@
-import { useDashboard } from "../context/DashboardContext";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 
-const ExpenseCard = () => {
-  const { dashboard } = useDashboard();
+const ExpenseCard = ({amount}) => {
+  // const { dashboard } = useDashboard();
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 w-full">
       {/* Header */}
@@ -18,7 +17,7 @@ const ExpenseCard = () => {
       <div className="flex items-center mt-6">
         <FaIndianRupeeSign className="text-3xl text-gray-800" />
         <span className="text-4xl font-bold text-red-500">
-          {dashboard?.totalExpense}
+          {amount}
         </span>
       </div>
     </div>

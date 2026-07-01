@@ -55,7 +55,8 @@ const getDashboard = async (req, res) => {
   const userId = new mongoose.Types.ObjectId(req.user.id);
 
   try {
-    // Total Income
+    // Total Income , here we are using aggregation pipeline to calculate the total income and total expense for the user. Based on filter like today, week, month, year, all we will calculate the total income and total expense for the user.
+
     const incomeResult = await Transaction.aggregate([
       {
         $match: {
@@ -140,6 +141,10 @@ const filterTransaction = async (req, res) => {
       case "week":
         startDate.setDate(startDate.getDate() - startDate.getDay());
         startDate.setHours(0, 0, 0, 0);
+
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 6);
+        endDate.setHours(23, 59, 59, 999);
         break;
 
       case "month":

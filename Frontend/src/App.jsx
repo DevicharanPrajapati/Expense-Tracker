@@ -12,6 +12,7 @@ import Income from "./pages/Income";
 import Expense from "./pages/Expense";
 
 function App() {
+
   return (
     <Routes>
       <Route element={<MainLayout />}>

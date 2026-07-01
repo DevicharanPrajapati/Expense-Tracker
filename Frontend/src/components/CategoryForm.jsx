@@ -24,8 +24,7 @@ const CategoryForm = () => {
 
     console.log(formData);
 
-    // TODO: Call your API here
-    // await api.post("/category/createCategory", formData);
+    //Api call to add category
     try {
       const response = await api.post("/category/addCategory", formData, {
         headers: {
