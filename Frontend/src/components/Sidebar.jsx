@@ -4,6 +4,8 @@ import { FaArrowAltCircleUp, FaArrowAltCircleDown } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { useAuth} from "../context/AuthContexts";
 import { useNavigate } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
+
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -54,6 +56,11 @@ const Sidebar = () => {
         <NavLink to="/expense" className={menuClass}>
           <FaArrowAltCircleDown size={22} />
           <span>Expense</span>
+        </NavLink>
+
+        <NavLink to="/profile" className={menuClass}>
+          <FaUser size={22} />
+          <span>Profile</span>
         </NavLink>
       </nav>
 

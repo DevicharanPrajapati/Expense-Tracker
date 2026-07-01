@@ -14,16 +14,17 @@ export const Income = () => {
     (transaction) => transaction.type === "income",
   );
 
-  if (incomeTransactions.length === 0) {
-    var errMessage = "No Transactions Found";
-  }
-
+ 
   const filterAmount = incomeTransactions.reduce(
     (total, transaction) => total + transaction.amount,
     0,
   );
-  console.log("Income Transactions:", incomeTransactions);
-  console.log("Total Income Amount:", filterAmount);
+
+   if (incomeTransactions.length === 0) {
+    var errMessage = "No Transactions Found";
+  }
+
+ 
 
   return (
     <div className="min-h-screen bg-gray-100 p-6 rounded-2xl">

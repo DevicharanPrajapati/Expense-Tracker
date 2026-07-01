@@ -10,6 +10,7 @@ import CategoryForm from "./components/CategoryForm";
 import NotFound from "./pages/NotFound";
 import Income from "./pages/Income";
 import Expense from "./pages/Expense";
+import Profile from "./pages/Profile";
 
 function App() {
 
@@ -38,6 +39,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Expense />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

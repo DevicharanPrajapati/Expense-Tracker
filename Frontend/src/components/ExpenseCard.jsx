@@ -16,7 +16,7 @@ const ExpenseCard = ({amount}) => {
       <div className="flex items-center mt-6">
         <FaIndianRupeeSign className="text-3xl text-gray-800" />
         <span className="text-4xl font-bold text-red-500">
-          {amount}
+          {amount.toLocaleString()}
         </span>
       </div>
     </div>
