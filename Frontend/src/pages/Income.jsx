@@ -10,7 +10,6 @@ export const Income = () => {
 
   const { filterData } = useFilterTransaction();
 
-
   const incomeTransactions = filterData.filter(
     (transaction) => transaction.type === "income",
   );

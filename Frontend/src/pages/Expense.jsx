@@ -11,7 +11,6 @@ const Expense = () => {
 
   const { filterData } = useFilterTransaction();
 
-
   const expenseTransactions = filterData.filter(
     (transaction) => transaction.type === "expense",
   );
@@ -30,9 +29,6 @@ const Expense = () => {
       {/* Header */}
       <h2 className="text-3xl font-bold text-gray-800">Expense</h2>
       <p className="text-gray-500 mb-8">Let's manage your Expenses.</p>
-
-      {/* Balance Cards */}
-    
 
       {/* Bottom Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

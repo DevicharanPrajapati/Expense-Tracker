@@ -127,9 +127,7 @@ const filterTransaction = async (req, res) => {
         startDate.setDate(startDate.getDate() - startDate.getDay());
         startDate.setHours(0, 0, 0, 0);
 
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 6);
-        endDate.setHours(23, 59, 59, 999);
+        endDate = new Date();
         break;
 
       case "month":
@@ -197,118 +195,85 @@ const filterTransaction = async (req, res) => {
   }
 };
 
-const showAllTransaction = async (req, res) => {
-  try {
-    const user = req.user.id;
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "User Not found" });
-    }
-    const transactions = await Transaction.find({ user })
-      .populate("category", "name")
-      .sort({ transactionDate: -1 });
 
-    if (transactions.length === 0) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Transactions are not found" });
-    }
+// const incomeTransactions = async (req, res) => {
+//   try {
+//     const user = req.user.id;
 
-    return res.status(200).json({
-      success: true,
-      message: "Transactions are fetched successfully!",
-      transactions,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+//     if (!user) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "User not found!" });
+//     }
 
-const incomeTransactions = async (req, res) => {
-  try {
-    const user = req.user.id;
+//     const incomeData = await Transaction.find({
+//       user: user,
+//       type: "income",
+//     })
+//       .populate("category", "name")
+//       .sort({ transactionDate: -1 });
 
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found!" });
-    }
+//     if (incomeData.length === 0) {
+//       return res
+//         .status(500)
+//         .json({ success: false, message: "income Not found" });
+//     }
 
-    const incomeData = await Transaction.find({
-      user: user,
-      type: "income",
-    })
-      .populate("category", "name")
-      .sort({ transactionDate: -1 });
+//     const totalIncome = incomeData.reduce(
+//       (total, transaction) => total + transaction.amount,
+//       0,
+//     );
 
-    if (incomeData.length === 0) {
-      return res
-        .status(500)
-        .json({ success: false, message: "income Not found" });
-    }
+//     return res.status(200).json({
+//       success: true,
+//       message: "income fetched successfully",
+//       totalIncome,
+//       incomeTransactions: incomeData,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({ success: false, message: error.message });
+//   }
+// };
 
-    const totalIncome = incomeData.reduce(
-      (total, transaction) => total + transaction.amount,
-      0,
-    );
+// const expenseTransactions = async (req, res) => {
+//   try {
+//     const user = req.user.id;
 
-    return res.status(200).json({
-      success: true,
-      message: "income fetched successfully",
-      totalIncome,
-      incomeTransactions: incomeData,
-    });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     if (!user) {
+//       return res
+//         .status(404)
+//         .json({ success: false, message: "User not found!" });
+//     }
 
-const expenseTransactions = async (req, res) => {
-  try {
-    const user = req.user.id;
+//     const expenseData = await Transaction.find({
+//       user: user,
+//       type: "expense",
+//     }).populate("category", "name");
 
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found!" });
-    }
+//     if (expenseData.length === 0) {
+//       return res
+//         .status(500)
+//         .json({ success: false, message: "expense data Not found" });
+//     }
 
-    const expenseData = await Transaction.find({
-      user: user,
-      type: "expense",
-    }).populate("category", "name");
+//     const totalExpense = expenseData.reduce(
+//       (total, transaction) => total + transaction.amount,
+//       0,
+//     );
 
-    if (expenseData.length === 0) {
-      return res
-        .status(500)
-        .json({ success: false, message: "expense data Not found" });
-    }
-
-    const totalExpense = expenseData.reduce(
-      (total, transaction) => total + transaction.amount,
-      0,
-    );
-
-    return res.status(200).json({
-      success: true,
-      message: "expense fetched successfully",
-      totalExpense,
-      expenseTransactions: expenseData,
-    });
-  } catch (error) {
-    return res.status(500).json({ success: false, message: error.message });
-  }
-};
+//     return res.status(200).json({
+//       success: true,
+//       message: "expense fetched successfully",
+//       totalExpense,
+//       expenseTransactions: expenseData,
+//     });
+//   } catch (error) {
+//     return res.status(500).json({ success: false, message: error.message });
+//   }
+// };
 
 module.exports = {
   createTransaction,
-  showAllTransaction,
-  incomeTransactions,
-  expenseTransactions,
   getBalance,
   filterTransaction,
 };
