@@ -11,9 +11,12 @@ export const FilterTransactionProvider = ({ children }) => {
   const [filterData, setFilterData] = useState([]);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
+  const [filterLoading, setFilterLoading] = useState(false);
 
   const getFilteredTransactions = async (selectedFilter) => {
-    if (!token) return;
+    if (!token || filterLoading) return;
+
+    setFilterLoading(true);
 
     try {
       const { data } = await api.get(
@@ -22,25 +25,30 @@ export const FilterTransactionProvider = ({ children }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },
+        }
       );
-      setLoading(false);
 
       setFilter(selectedFilter);
       setFilterData(data.transactions);
       setMessage(data.message);
-      // console.log("Filtered Transactions:", data.transactions);
     } catch (error) {
       console.error(error);
-      setLoading(false);
+
       setMessage(
-        error.response?.data?.message || "Error fetching transactions",
+        error.response?.data?.message || "Error fetching transactions"
       );
+    } finally {
+      setLoading(false);
+      setFilterLoading(false);
     }
   };
+
+  // Initial load only
   useEffect(() => {
-    getFilteredTransactions(filter);
-  }, [filter, token]);
+    if (token) {
+      getFilteredTransactions("all");
+    }
+  }, [token]);
 
   return (
     <FilterTransactionContext.Provider
@@ -49,6 +57,7 @@ export const FilterTransactionProvider = ({ children }) => {
         filterData,
         message,
         loading,
+        filterLoading,
         getFilteredTransactions,
       }}
     >
