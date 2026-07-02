@@ -4,7 +4,8 @@ import { useProfileUpdate } from "../context/ProfileUpdateContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const UpdatePasswordForm = () => {
-  const { updatePassword } = useProfileUpdate();
+  const { updatePassword, changePasswordLoading, setChangePasswordLoading } =
+    useProfileUpdate();
 
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -19,16 +20,23 @@ const UpdatePasswordForm = () => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (changePasswordLoading) return;
+    setChangePasswordLoading(true);
     // API Call
     // console.log(formData);
-    updatePassword(formData);
-    alert("Password updated successfully!");
+    try {
+      await updatePassword(formData);
+      // alert("Password updated successfully!");
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setChangePasswordLoading(false);
+    }
   };
 
   return (
@@ -107,12 +115,13 @@ const UpdatePasswordForm = () => {
               </button>
             </Link>
 
-              <button
-                type="submit"
-                className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 font-semibold transition"
-              >
-                Update Password
-              </button>
+            <button
+              type="submit"
+              disabled={changePasswordLoading}
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 font-semibold transition"
+            >
+              {changePasswordLoading ?  "Updating.." : "Update Password"}
+            </button>
           </div>
         </form>
       </div>

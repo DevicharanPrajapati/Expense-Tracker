@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { useAuth } from "./AuthContexts";
 import api from "../services/api";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,8 @@ const ProfileUpdateContext = createContext();
 const ProfileUpdateProvider = ({ children }) => {
   const { token, setUser } = useAuth();
   const navigate = useNavigate();
+  const [updateProfileLoading, setUpdateProfileLoading] = useState(false);
+  const [changePasswordLoading, setChangePasswordLoading] = useState(false);
 
   const updateProfile = async (name) => {
     try {
@@ -35,17 +37,13 @@ const ProfileUpdateProvider = ({ children }) => {
   //password update api call
   const updatePassword = async (formdata) => {
     try {
-      const response = await api.put(
-        "/users/updatePassword",
-        formdata,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await api.put("/users/updatePassword", formdata, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
       // console.log("Password update response:", response.data);
-      alert(response.data.message);
+      // alert(response.data.message);
       navigate("/profile");
       return response.data.message;
     } catch (error) {
@@ -56,7 +54,16 @@ const ProfileUpdateProvider = ({ children }) => {
   };
 
   return (
-    <ProfileUpdateContext.Provider value={{ updateProfile, updatePassword }}>
+    <ProfileUpdateContext.Provider
+      value={{
+        updateProfile,
+        updatePassword,
+        updateProfileLoading,
+        setUpdateProfileLoading,
+        changePasswordLoading,
+        setChangePasswordLoading,
+      }}
+    >
       {children}
     </ProfileUpdateContext.Provider>
   );

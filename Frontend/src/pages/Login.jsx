@@ -4,7 +4,7 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContexts";
 
 const Login = () => {
-  const { setUser, setToken } = useAuth();
+  const { setUser, setToken, loginLoading, setLoginLoading } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -22,6 +22,10 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
 
+    if (loginLoading) return;
+
+    setLoginLoading(true);
+
     // Send data to backend
     try {
       const response = await api.post("/users/login", formData);
@@ -31,13 +35,14 @@ const Login = () => {
       setToken(response.data.token);
       setUser(response.data.user);
 
-      alert("Login Successful!");
-
+      // alert("ok") //check multiple click
       navigate("/dashboard");
     } catch (error) {
       console.log(error.response?.data);
 
-      alert(error.response?.data?.message || "Something went wrong");
+      // alert(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoginLoading(false);
     }
   }
   return (
@@ -52,19 +57,6 @@ const Login = () => {
         </p>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
-          {/* <div>
-            <label className="block mb-2 font-medium">Full Name</label>
-
-            <input
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              type="text"
-              placeholder="Enter your name"
-              className="w-full border rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div> */}
-
           <div>
             <label className="block mb-2 font-medium">Email</label>
 
@@ -91,21 +83,12 @@ const Login = () => {
             />
           </div>
 
-          {/* <div>
-            <label className="block mb-2 font-medium">Confirm Password</label>
-
-            <input
-              type="password"
-              placeholder="Confirm password"
-              className="w-full border rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div> */}
-
           <button
             type="submit"
+            disabled={loginLoading}
             className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
           >
-            Login
+            {loginLoading ? "Logging in..." : "Login"}
           </button>
         </form>
 

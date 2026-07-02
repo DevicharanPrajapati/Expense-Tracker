@@ -6,11 +6,17 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
-  const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [registerLoading, setRegisterLoading] = useState(false);
+ 
 
   useEffect(() => {
     const fetchProfile = async () => {
-      if (!token) return;
+      if (!token) {
+        setAuthLoading(false);
+        return;
+      }
       try {
         const response = await api.get("/users/profile", {
           headers: {
@@ -23,15 +29,16 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.log(error.message);
       } finally {
-        setLoading(false);
+        setAuthLoading(false);
       }
     };
 
     fetchProfile();
-  }, [token, loading]);
+  }, [token]);
 
   const logout = () => {
     localStorage.removeItem("token");
+    setToken("");
     setUser(null);
   };
 
@@ -42,9 +49,14 @@ export const AuthProvider = ({ children }) => {
         setUser,
         token,
         setToken,
-        loading,
-        setLoading,
+        authLoading,
+        setAuthLoading,
+        loginLoading,
+        setLoginLoading,
         logout,
+        registerLoading,
+        setRegisterLoading,
+       
       }}
     >
       {children}

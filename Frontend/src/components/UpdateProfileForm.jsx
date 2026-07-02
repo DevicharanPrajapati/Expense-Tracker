@@ -6,16 +6,24 @@ import { useProfileUpdate } from "../context/ProfileUpdateContext";
 
 const UpdateProfileForm = () => {
   const { user } = useAuth();
-  const { updateProfile} = useProfileUpdate();
-  // const navigate = useNavigate();
+  const { updateProfile, updateProfileLoading, setUpdateProfileLoading } =
+    useProfileUpdate(); // const navigate = useNavigate();
 
   const [name, setName] = useState(user?.name || "");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (updateProfileLoading) return;
+    setUpdateProfileLoading(true);
 
     // API Call Here
-    updateProfile(name);
+    try {
+      await updateProfile(name);
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setUpdateProfileLoading(false);
+    }
   };
 
   return (
@@ -63,9 +71,10 @@ const UpdateProfileForm = () => {
 
             <button
               type="submit"
+              disabled={updateProfileLoading}
               className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
             >
-              Save Changes
+              {updateProfileLoading ? "Saving.." : "Save Changes"}
             </button>
           </div>
         </form>

@@ -1,8 +1,11 @@
-import { Link, useNavigate  } from "react-router-dom";
-import {useState} from 'react';
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 import api from "../services/api.js";
+import { useAuth } from "../context/AuthContexts.jsx";
 
 const Register = () => {
+  const { registerLoading, setRegisterLoading } = useAuth();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,30 +13,34 @@ const Register = () => {
   });
 
   function handleChange(e) {
-  setFormData({
-    ...formData,
-    [e.target.name]: e.target.value,
-  });
-}
-const navigate = useNavigate();
-
-async function handleSubmit(e) {
-  e.preventDefault();
-
-  // Send data to backend
-   try {
-    const response = await api.post("/users/register", formData);
-
-    console.log(response.data);
-
-    alert("Registration Successful!");
-    navigate("/");
-  } catch (error) {
-    console.log(error.response?.data);
-
-    alert(error.response?.data?.message || "Something went wrong");
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   }
-}
+  const navigate = useNavigate();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (registerLoading) return;
+    setRegisterLoading(true);
+
+    // Send data to backend
+    try {
+      const response = await api.post("/users/register", formData);
+
+      console.log(response.data);
+
+      alert("Registration Successful!");
+      navigate("/");
+    } catch (error) {
+      console.log(error.response?.data);
+
+      alert(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setRegisterLoading(false);
+    }
+  }
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
@@ -79,28 +86,18 @@ async function handleSubmit(e) {
               name="password"
               value={formData.password}
               onChange={handleChange}
-
               type="password"
               placeholder="Enter password"
               className="w-full border rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
-          {/* <div>
-            <label className="block mb-2 font-medium">Confirm Password</label>
-
-            <input
-              type="password"
-              placeholder="Confirm password"
-              className="w-full border rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div> */}
-
           <button
             type="submit"
+            disabled={registerLoading}
             className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
           >
-            Register
+            {registerLoading ? "Registering..." : "Register"}
           </button>
         </form>
 
