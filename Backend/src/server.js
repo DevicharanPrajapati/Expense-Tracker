@@ -14,7 +14,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173", // local development
-      "https://expense-tracker-gjxojlyp5-devicharans-projects.vercel.app", // your Vercel URL
+      "https://expense-tracker-bmqso5ozc-devicharans-projects.vercel.app", // your Vercel URL
     ],
     credentials: true,
   }),
