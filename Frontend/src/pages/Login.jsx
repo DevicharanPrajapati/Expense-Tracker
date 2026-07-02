@@ -2,10 +2,13 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContexts";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 
 const Login = () => {
   const { setUser, setToken, loginLoading, setLoginLoading } = useAuth();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -70,7 +73,7 @@ const Login = () => {
             />
           </div>
 
-          <div>
+          <div className="relative">
             <label className="block mb-2 font-medium">Password</label>
 
             <input
@@ -81,6 +84,13 @@ const Login = () => {
               placeholder="Enter password"
               className="w-full border rounded-lg px-4 py-2 outline-none focus:ring-2 focus:ring-green-500"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-2/3 -translate-y-1/2 text-gray-500"
+            >
+              {setShowPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
           </div>
 
           <button

@@ -21,9 +21,30 @@ const UpdatePasswordForm = () => {
       [e.target.name]: e.target.value,
     }));
   };
+  const [error, setError] = useState("");
+
+  const validateUpdatePass = () => {
+    if (!formData.password) {
+      return "Password is required";
+    }
+
+    if (formData.password.length < 6) {
+      return "Password must be at least 6 characters";
+    }
+
+    return null;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //vailidate newPassword
+    const validationError = validateUpdatePass();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+    setError("");
 
     if (changePasswordLoading) return;
     setChangePasswordLoading(true);
@@ -49,6 +70,7 @@ const UpdatePasswordForm = () => {
             Update your account password
           </p>
         </div>
+        
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
@@ -103,7 +125,11 @@ const UpdatePasswordForm = () => {
               </button>
             </div>
           </div>
-
+           {error && (
+            <div className="mb-4 p-3 rounded-lg bg-red-100 border border-red-300 text-red-700">
+              {error}
+            </div>
+          )}
           {/* Buttons */}
           <div className="flex gap-4 pt-2">
             <Link to="/profile">
@@ -120,7 +146,7 @@ const UpdatePasswordForm = () => {
               disabled={changePasswordLoading}
               className="flex-1 bg-green-600 hover:bg-green-700 text-white rounded-xl py-3 font-semibold transition"
             >
-              {changePasswordLoading ?  "Updating.." : "Update Password"}
+              {changePasswordLoading ? "Updating.." : "Update Password"}
             </button>
           </div>
         </form>

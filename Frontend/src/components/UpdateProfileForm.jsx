@@ -13,6 +13,8 @@ const UpdateProfileForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+
     if (updateProfileLoading) return;
     setUpdateProfileLoading(true);
 
@@ -50,13 +52,13 @@ const UpdateProfileForm = () => {
             </label>
 
             <input
-              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
               className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
+
 
           {/* Buttons */}
           <div className="flex gap-2">

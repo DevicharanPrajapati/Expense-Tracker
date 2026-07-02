@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContexts.jsx";
 
 const Register = () => {
   const { registerLoading, setRegisterLoading } = useAuth();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -18,10 +19,44 @@ const Register = () => {
       [e.target.name]: e.target.value,
     });
   }
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  const validate = () => {
+    if (!formData.name.trim()) {
+      return "Name is required";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!formData.email.trim()) {
+      return "Email is required";
+    }
+
+    if (!emailRegex.test(formData.email)) {
+      return "Please enter a valid email";
+    }
+
+    if (!formData.password) {
+      return "Password is required";
+    }
+
+    if (formData.password.length < 6) {
+      return "Password must be at least 6 characters";
+    }
+
+    return null;
+  };
 
   async function handleSubmit(e) {
     e.preventDefault();
+
+    //Vailidation
+    const validationError = validate();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+    setError("");
+
     if (registerLoading) return;
     setRegisterLoading(true);
 
@@ -31,7 +66,7 @@ const Register = () => {
 
       console.log(response.data);
 
-      alert("Registration Successful!");
+      // alert("Registration Successful!");
       navigate("/");
     } catch (error) {
       console.log(error.response?.data);
@@ -51,6 +86,12 @@ const Register = () => {
         <p className="text-center text-gray-500 mt-2 mb-6">
           Register to start managing your expenses.
         </p>
+
+        {error && (
+          <div className="mb-4 p-3 rounded-lg bg-red-100 border border-red-300 text-red-700">
+            {error}
+          </div>
+        )}
 
         <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
