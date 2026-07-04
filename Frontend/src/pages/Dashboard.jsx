@@ -7,9 +7,9 @@ import SevingCard from "../components/SavingCard";
 import FilterCard from "../components/FilterCard";
 import { useFilterTransaction } from "../context/FilterTransactionContext";
 import { useDashboard } from "../context/DashboardContext";
-import ExpensePieChart from "../components/charts/ExpensePieChart";
-import MonthlyExpenseChart from "../components/charts/MonthlyExpenseChart";
-import WeeklyExpenseChart from "../components/charts/WeeklyExpenseChart";
+import ExpensePieChart from "../components/Charts/ExpensePieChart";
+import MonthlyExpenseChart from "../components/Charts/MonthlyExpenseChart";
+import WeeklyExpenseChart from "../components/Charts/WeeklyExpenseChart";
 
 const Dashboard = () => {
   // context Apis
