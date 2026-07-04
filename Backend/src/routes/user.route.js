@@ -14,8 +14,8 @@ const router = express.Router();
 router.post("/register", userRegistration);
 router.post("/login", login)
 router.get("/profile",verifyToken, profile)
-router.put("/updateProfile", verifyToken, updateProfile)
-router.put("/updatePassword", verifyToken, updatePassword)
+router.patch("/updateProfile", verifyToken, updateProfile)
+router.patch("/updatePassword", verifyToken, updatePassword)
 router.post("/logout", verifyToken, logout)
 
 

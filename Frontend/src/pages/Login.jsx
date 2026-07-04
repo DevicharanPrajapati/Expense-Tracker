@@ -52,7 +52,7 @@ const Login = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <h1 className="text-3xl font-bold text-center text-green-600">
-          Create Account
+          Login 
         </h1>
 
         <p className="text-center text-gray-500 mt-2 mb-6">
@@ -103,7 +103,7 @@ const Login = () => {
         </form>
 
         <p className="text-center mt-6 text-gray-600">
-          Already have an account?
+          You have not an account?
           <Link
             to="/register"
             className="text-green-600 font-medium ml-1 hover:underline"

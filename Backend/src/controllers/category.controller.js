@@ -36,7 +36,8 @@ const getCategories = async(req, res)=>{
 try {
     const categories = await Category.find(
      { userId : req.user.id}
-    ).select("-password");
+    )
+    console.log(categories);
   
     if(categories.length === 0){ //because find returns array
       return res.status(404)

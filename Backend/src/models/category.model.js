@@ -12,7 +12,13 @@ const categorySchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      lowercase : true
+      lowercase: true,
+    },
+    
+    type: {
+      type: String,
+      enum: ["income", "expense"],
+      required: true,
     },
 
     isDefault: {

@@ -135,9 +135,7 @@ const updateProfile = async (req, res) => {
        {
          name: name, // What to update?
        },
-      {
-        returnDocument: "after",
-      },
+      
       {
         new: true, // Return updated document
       },
