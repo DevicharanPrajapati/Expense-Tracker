@@ -19,7 +19,7 @@ const TransactionFrom = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(resCat.data);
+        // console.log(resCat.data);
         setCategories(resCat.data.categories);
       } catch (error) {
         console.log(error.resCat?.data || error.message);

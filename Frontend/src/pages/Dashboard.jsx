@@ -6,11 +6,20 @@ import ExpenseCard from "../components/ExpenseCard";
 import SevingCard from "../components/SavingCard";
 import FilterCard from "../components/FilterCard";
 import { useFilterTransaction } from "../context/FilterTransactionContext";
+import { useDashboard } from "../context/DashboardContext";
+import ExpensePieChart from "../components/charts/ExpensePieChart";
+import MonthlyExpenseChart from "../components/charts/MonthlyExpenseChart";
+import WeeklyExpenseChart from "../components/charts/WeeklyExpenseChart";
 
 const Dashboard = () => {
+  // context Apis
   const { filterData } = useFilterTransaction();
+  const { dashboardData } = useDashboard();
+
+  // props
   const title = "Add Transaction";
 
+  //Data filtering
   if (filterData.length === 0) {
     var errMessage = "No Transactions Found";
   }
@@ -65,6 +74,15 @@ const Dashboard = () => {
             errMessage={errMessage}
           />
         </div>
+      </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6">
+        <ExpensePieChart data={dashboardData.categoryWiseExpense} />
+
+        <MonthlyExpenseChart data={dashboardData.monthlyExpense} />
+      </div>
+
+      <div className="mb-6">
+        <WeeklyExpenseChart data={dashboardData.weeklyExpense} />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import { AuthProvider } from "./context/AuthContexts.jsx";
 import { BalanceDataProvider } from "./context/BalanceDataContext.jsx";
 import { FilterTransactionProvider } from "./context/FilterTransactionContext.jsx";
 import { ProfileUpdateProvider } from "./context/ProfileUpdateContext.jsx";
+import { DashboardProvider } from "./context/DashboardContext";
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
@@ -14,7 +15,9 @@ createRoot(document.getElementById("root")).render(
       <BalanceDataProvider>
         <FilterTransactionProvider>
           <ProfileUpdateProvider>
-            <App />
+            <DashboardProvider>
+              <App />
+            </DashboardProvider>
           </ProfileUpdateProvider>
         </FilterTransactionProvider>
       </BalanceDataProvider>

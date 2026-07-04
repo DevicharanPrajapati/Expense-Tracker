@@ -14,11 +14,12 @@ const categorySchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
-    
+
     type: {
       type: String,
       enum: ["income", "expense"],
       required: true,
+      lowercase : true
     },
 
     isDefault: {
