@@ -40,9 +40,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         className={`
           fixed lg:static
           top-0 left-0
-          w-64 h-screen
+          w-64
           flex flex-col
-          bg-white
+          bg-olive-200  
           z-50
           transform transition-transform duration-300
           ${isOpen ? "translate-x-0" : "-translate-x-full"}

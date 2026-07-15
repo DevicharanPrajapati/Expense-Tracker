@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import { useState } from "react";
+import Footer from "../components/Footer"
 
 function MainLayout() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,10 @@ function MainLayout() {
           <Outlet />
         </main>
       </div>
+
+      <Footer 
+      setIsOpen={setIsOpen}
+      />
     </div>
   );
 }
